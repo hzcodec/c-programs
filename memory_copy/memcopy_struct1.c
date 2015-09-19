@@ -37,6 +37,7 @@ int main(int argc, char* argv[])
     };
 
     memcpy(property.identifier, "COMPANY AB     ", sizeof(property.identifier));
+    printf("Size of identifier: %d\n", sizeof(property.identifier));
 
     printf("Identifier:      %s\n", property.identifier);
     printf("Ext. Identifier: %d\n", property.extendedIdentifier);
