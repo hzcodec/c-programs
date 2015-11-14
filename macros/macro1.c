@@ -13,19 +13,19 @@
 
 typedef unsigned int MY_STATUS;
 
-#define MY_ERROR                 (-1)
-#define MY_OK                    (0x00) /* Operation succeeded */
-#define MY_FAIL                  (0x01) /* Operation failed    */
-#define MY_BAD_VALUE             (0x02) /* Illegal value        */
-#define MY_OUT_OF_RANGE          (0x03) /* Value is out of range*/
-#define MY_BAD_PARAM             (0x04) /* Illegal parameter in function called  */
+#define MY_ERROR          (-1)
+#define MY_OK             (0x00) /* Operation succeeded */
+#define MY_FAIL           (0x01) /* Operation failed    */
+#define MY_BAD_VALUE      (0x02) /* Illegal value        */
+#define MY_OUT_OF_RANGE   (0x03) /* Value is out of range*/
+#define MY_BAD_PARAM      (0x04) /* Illegal parameter in function called  */
 
-#define BLOCK_ERROR_CODE_TO_STRING(_Rc)   _Rc == (MY_STATUS)MY_ERROR          ?  "ERROR"                                :\
-                                          _Rc == (MY_STATUS)MY_OK             ?  "Operation succeeded"                  :\
-                                          _Rc == (MY_STATUS)MY_FAIL           ?  "Operation failed"                     :\
-                                          _Rc == (MY_STATUS)MY_BAD_VALUE      ?  "Illegal value"                        :\
-                                          _Rc == (MY_STATUS)MY_OUT_OF_RANGE   ?  "Value is out of range"                :\
-                                          _Rc == (MY_STATUS)MY_BAD_PARAM      ?  "Illegal parameter in function called"     : "Unknown error string"
+#define BLOCK_ERROR_CODE_TO_STRING(_Rc) _Rc == (MY_STATUS)MY_ERROR          ?  "ERROR"                                :\
+                                        _Rc == (MY_STATUS)MY_OK             ?  "Operation succeeded"                  :\
+                                        _Rc == (MY_STATUS)MY_FAIL           ?  "Operation failed"                     :\
+                                        _Rc == (MY_STATUS)MY_BAD_VALUE      ?  "Illegal value"                        :\
+                                        _Rc == (MY_STATUS)MY_OUT_OF_RANGE   ?  "Value is out of range"                :\
+                                        _Rc == (MY_STATUS)MY_BAD_PARAM      ?  "Illegal parameter in function called"     : "Unknown error string"
  
 #define PRODTEST_SUCCESS 0
 #define PRODTEST_FAILURE 1
