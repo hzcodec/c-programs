@@ -22,7 +22,9 @@
 #define MY_DIAG_PRINT_ON_ERROR(_function, _retcode) \
   if (MY_FAILURE(_retcode)) { \
     printf("Line: %d: %s() call failed with error code %d, %s\n", __LINE__, _function, _retcode, MY_ERROR_CODE_TO_STRING(_retcode)); \
-  }
+  } \
+  else \
+    printf("Line: %d: %s() call was OK\n", __LINE__, _function);
 
 typedef enum
 {
@@ -37,5 +39,12 @@ int main()
 {
   MY_RC myRc  = MY_RC__CRITICAL_ERROR;
   MY_DIAG_PRINT_ON_ERROR("main", myRc);
+
+  myRc  = MY_RC__ILLEGAL_PARAMETER;
+  MY_DIAG_PRINT_ON_ERROR("main", myRc);
+
+  myRc  = MY_RC__OK;
+  MY_DIAG_PRINT_ON_ERROR("main", myRc);
+
   return 0;
 }
