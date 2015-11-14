@@ -27,15 +27,15 @@ typedef unsigned int MY_STATUS;
                                           _Rc == (MY_STATUS)MY_OUT_OF_RANGE  ?  "Value is out of range"       :\
                                           _Rc == (MY_STATUS)MY_CREATE_ERROR  ?  "Fail while createing an item"  : "Unknown error string"
 
-#define EHSL_DIAG_PRODTEST_SUCCESS 0
-#define EHSL_DIAG_PRODTEST_FAILURE 1
+#define DIAG_PRODTEST_SUCCESS 0
+#define DIAG_PRODTEST_FAILURE 1
 
 #define EHSL_CPSS_FAILURE(_retcode) ((_retcode) != (MY_OK))
 
 #define DIAG_RETURN_ON_ERROR(_function, _retcode) \
   if (EHSL_CPSS_FAILURE(_retcode)) { \
     printf("Line: %d in function: %s(), failed with error code: %d => %s\n", __LINE__, _function, _retcode, BLOCK_ERROR_CODE_TO_STRING(_retcode)); \
-    return EHSL_DIAG_PRODTEST_FAILURE; \
+    return DIAG_PRODTEST_FAILURE; \
   }
 
  
