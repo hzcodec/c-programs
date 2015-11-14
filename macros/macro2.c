@@ -25,10 +25,10 @@
 
 #define MY_DIAG_PRINT_ON_ERROR(_function, _retcode) \
   if (MY_FAILURE(_retcode)) { \
-    printf("Line: %d: %s() call failed with error code %d, %s\n", __LINE__, _function, _retcode, MY_ERROR_CODE_TO_STRING(_retcode)); \
+    printf("In file: %s, Line: %d: %s() call failed with error code %d, %s\n", __FILE__, __LINE__, _function, _retcode, MY_ERROR_CODE_TO_STRING(_retcode)); \
   } \
   else \
-    printf("Line: %d: %s() call was OK, %s\n", __LINE__, _function, MY_ERROR_CODE_TO_STRING(_retcode));
+    printf("In file: %s, Line: %d: %s() call was OK, %s\n", __FILE__, __LINE__, _function, MY_ERROR_CODE_TO_STRING(_retcode));
 
 typedef enum
 {
