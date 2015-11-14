@@ -11,10 +11,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MY_ERROR_CODE_TO_STRING(_Rc) _Rc == (MY_RC)MY_RC__OK                  ?  "Success"                                    :\
-                                     _Rc == (MY_RC)MY_RC__NON_CRITICAL_ERROR  ?  "Failed, the HW state was not changed"       :\
-                                     _Rc == (MY_RC)MY_RC__CRITICAL_ERROR      ?  "Failed, the HW state has been changed"      :\
-                                     _Rc == (MY_RC)MY_RC__ILLEGAL_PARAMETER   ?  "Failed, error returned when calling driver" : "Unknown error string"
+//#define MY_ERROR_CODE_TO_STRING(_Rc) _Rc == (MY_RC)MY_RC__OK                  ?  "Success"                                    :\
+//                                     _Rc == (MY_RC)MY_RC__NON_CRITICAL_ERROR  ?  "Failed, the HW state was not changed"       :\
+//                                     _Rc == (MY_RC)MY_RC__CRITICAL_ERROR      ?  "Failed, the HW state has been changed"      :\
+//                                     _Rc == (MY_RC)MY_RC__ILLEGAL_PARAMETER   ?  "Failed, error returned when calling driver" : "Unknown error string"
+#define MY_ERROR_CODE_TO_STRING(_Rc) _Rc == MY_RC__OK                  ?  "Success"                                    :\
+                                     _Rc == MY_RC__NON_CRITICAL_ERROR  ?  "Failed, the HW state was not changed"       :\
+                                     _Rc == MY_RC__CRITICAL_ERROR      ?  "Failed, the HW state has been changed"      :\
+                                     _Rc == MY_RC__ILLEGAL_PARAMETER   ?  "Failed, error returned when calling driver" : "Unknown error string"
 
 #define MY_FAILURE(_retcode) ((_retcode) != MY_RC__OK)
 #define MY_SUCCESS(_retcode) ((_retcode) == MY_RC__OK)
@@ -24,7 +28,7 @@
     printf("Line: %d: %s() call failed with error code %d, %s\n", __LINE__, _function, _retcode, MY_ERROR_CODE_TO_STRING(_retcode)); \
   } \
   else \
-    printf("Line: %d: %s() call was OK\n", __LINE__, _function);
+    printf("Line: %d: %s() call was OK, %s\n", __LINE__, _function, MY_ERROR_CODE_TO_STRING(_retcode));
 
 typedef enum
 {
