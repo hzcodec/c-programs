@@ -3,7 +3,7 @@
     Date        : Sun Nov 29 01:08:07 CET 2015
     File        : c_oo.c
     Reference   : -
-    Description : -  
+    Description : Object oriented c.
 */
 
 #include <stdio.h>
@@ -122,7 +122,6 @@ int main(int argc, char* argv[])
   operation.message();
 
   operation.op("Print out self data");
-  operation.printSelf(&operation);
   operation.printSelf(&operation);
 
   return 0;
