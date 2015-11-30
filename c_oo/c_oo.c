@@ -23,7 +23,7 @@ typedef struct MAIN_BLOCK
   float version;
 
   // methods
-  void (*op)(char*    currentOperation);
+  void (*op)(char* currentOperation);
   int  (*add)(int* pNum1, int* pNum2);
   void (*sub)(int* pNum1, int* pNum2);
   void (*mul)(DataSet* pNum);
@@ -77,21 +77,21 @@ void printValues(MAIN_BLOCK* pObj)
 }
 
 
-void initObject(MAIN_BLOCK* man)
+void initObject(MAIN_BLOCK* mainBlock)
 {
-  if (man == NULL)
+  if (mainBlock == NULL)
   {
-    man = malloc(sizeof(struct MAIN_BLOCK));
+    mainBlock = malloc(sizeof(struct MAIN_BLOCK));
   }
  
-  strcpy(man->name, "MAIN OPERATIONS");
-  man->version    = 1.01;
-  man->op         = operation_op;
-  man->add        = operation_add;
-  man->sub        = operation_sub;
-  man->mul        = operation_mul;
-  man->message    = operation_message;
-  man->printSelf  = operation_printSelf;
+  strcpy(mainBlock->name, "MAIN OPERATIONS");
+  mainBlock->version    = 1.01;
+  mainBlock->op         = operation_op;
+  mainBlock->add        = operation_add;
+  mainBlock->sub        = operation_sub;
+  mainBlock->mul        = operation_mul;
+  mainBlock->message    = operation_message;
+  mainBlock->printSelf  = operation_printSelf;
 }
 
 int main(int argc, char* argv[])
