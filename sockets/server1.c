@@ -1,3 +1,11 @@
+/*
+    Auther      : Heinz Samuelsson
+    Date        : Wed Jan  6 23:22:29 CET 2016
+    File        : server1.c
+    Reference   : -
+    Description : -
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

@@ -6,7 +6,7 @@
     Description : client1 is communicating with server1.
                   How to use:
                     Start server - ./server1
-                    Start client - ./client1
+                    Start client - ./client1 <ip address>
                   It's also possible to use telnet.
                     telnet <ip-address> 3490
  */
