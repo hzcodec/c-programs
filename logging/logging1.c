@@ -1,7 +1,7 @@
 /*
     Auther       : Heinz Samuelsson
     Date         : 2016-01-15
-    File         : logging.c
+    File         : logging1.c
     Reference    : -
     Description  : - 
 */
