@@ -33,7 +33,7 @@ int main()
 {
   MY_STRUCT myStruct;
 
-  myStruct.packet1 = 2;  // = ENU_VAR3
+  myStruct.packet1 = ENUM_VAR3;
   printf("%s: %s\n", "Packet 1", ENUM2STRING(myStruct.packet1));
 
   myStruct.packet1 = 3;
