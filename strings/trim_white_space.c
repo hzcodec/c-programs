@@ -12,7 +12,7 @@
 
 const char* trimWhiteSpace(const char* str)
 {
-  const char* end;
+  char* end;
   
   // trim leading space
   while(isspace(*str)) str++;
@@ -23,12 +23,12 @@ const char* trimWhiteSpace(const char* str)
 
   // trim trailing space
   end = str + strlen(str) - 1;
-//  while(end > str && isspace(*end)) end--;
-//
-//  // write new null terminator
-//  *(end+1) = 0; 
-//
-//  return str;
+  while(end > str && isspace(*end)) end--;
+
+  // write new null terminator
+  *(end+1) = 0; 
+
+  return str;
 }
 
 // trim all leading spaces
