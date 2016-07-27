@@ -45,7 +45,7 @@ int main()
   
   uint8_t test;
 
-  test = ESTIMATED_TEMPERATUR | OVERCURRENT_FLAG; 
+  test = CONFIGURATION_STATUS | ESTIMATED_TEMPERATUR | OVERCURRENT_FLAG;
 
   // find which bit that is set
   for (int i=0; i<8; i++)
@@ -55,6 +55,8 @@ int main()
       printf("%s %d - %s\n", "Status:", i, ENUM2STRING(i));
     }
   }
+
+  printf("\n%s - %s\n", "Status:", ENUM2STRING(ACT_LAYER));
 
   return 0;
 }
