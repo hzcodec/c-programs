@@ -1,7 +1,7 @@
 /*
     Auther       : Heinz Samuelsson
     Date         : 2016-08-05
-    File         : funct_ptr.c
+    File         : function_pointer1.c
     Reference    : http://www.gammon.com.au/callbacks
     Description  : Example of function pointer.
 */ 
