@@ -15,7 +15,7 @@
 #define BELTED 2
 #define BUZZER 3
 
-int state = 0;
+int state = IDLE;
 int seat  = 1;
 
  
@@ -55,7 +55,7 @@ void FSM()
       printf("BUZZER\n");
       if (seat)
       {
-        state = SEATED;
+        state = BELTED;
       }
       else if (!seat)
       {
