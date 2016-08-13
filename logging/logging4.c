@@ -8,13 +8,13 @@
                    To log debug both DEBUG_ON and LEVEL need to be set.
 
                    Select debug ON and set debug level.
-                   gcc -std=gnu99 -DDDEBUG_ON=1 -DLEVEL=3 -DSUPRESSERR=0 logging4.c -o logging4
+                   gcc -std=gnu99 -DDEBUG_ON=1 -DLEVEL=3 -DSUPRESSERR=0 logging4.c -o logging4
 
                    Turn off debug
-                   gcc -std=gnu99 -DDDEBUG_ON=0 logging4.c -o logging4
+                   gcc -std=gnu99 -DDEBUG_ON=0 logging4.c -o logging4
 
                    Supress errors
-                   gcc -std=gnu99 -DDDEBUG_ON=1 -DLEVEL=3 -DSUPRESSERR=1 logging4.c -o logging4
+                   gcc -std=gnu99 -DDEBUG_ON=1 -DLEVEL=3 -DSUPRESSERR=1 logging4.c -o logging4
 */
 
 #include <stdio.h>
