@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 
-const char EHSL_PRODTEST_PORT_TEST_RESPONSE_HEAD[] = "\
+const char TEST_RESPONSE_HEAD[] = "\
 <?xml version=\"1.0\"?>\n\
 <methodResponse>\n\
   <params>\n\
@@ -22,7 +22,7 @@ const char EHSL_PRODTEST_PORT_TEST_RESPONSE_HEAD[] = "\
             <value>\n\
               <array>\n";
 
-const char EHSL_PRODTEST_PORT_TEST_CASE_RESULT[] = "\
+const char TEST_CASE_RESULT[] = "\
                 <data>\n\
                   <value>\n\
                     <struct>\n\
@@ -36,7 +36,7 @@ const char EHSL_PRODTEST_PORT_TEST_CASE_RESULT[] = "\
                   </value>\n\
                 </data>\n";
 
-const char EHSL_PRODTEST_PORT_TEST_RESPONSE_TAIL[] = "\
+const char TEST_RESPONSE_TAIL[] = "\
               </array>\n\
             </value>\n\
           </member>\n\
@@ -54,13 +54,13 @@ int main()
     printf("=============================================================\n");
 
     // build xml string
-    sprintf(stringA, EHSL_PRODTEST_PORT_TEST_RESPONSE_HEAD);
+    sprintf(stringA, TEST_RESPONSE_HEAD);
     printf("%s", stringA);
 
-    sprintf(stringA, EHSL_PRODTEST_PORT_TEST_CASE_RESULT, "Port A");
+    sprintf(stringA, TEST_CASE_RESULT, "Port A");
     printf("%s", stringA);
 
-    sprintf(stringA, EHSL_PRODTEST_PORT_TEST_RESPONSE_TAIL);
+    sprintf(stringA, TEST_RESPONSE_TAIL);
     printf("%s\n", stringA);
 
     printf("=============================================================\n");
