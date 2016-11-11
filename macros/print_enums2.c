@@ -19,7 +19,7 @@ const char* dayNames[] = {
                           [Friday]    = "Friday", 
                           [Saturday]  = "Saturday", 
                           [Sunday]    = "Sunday", 
-                          [NoDay]    = "NoDay", 
+                          [NoDay]     = "NoDay", 
                          };
  
 int main()
