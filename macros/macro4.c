@@ -30,10 +30,10 @@ typedef unsigned int MY_STATUS;
 #define DIAG_PRODTEST_SUCCESS 0
 #define DIAG_PRODTEST_FAILURE 1
 
-#define EHSL_CPSS_FAILURE(_retcode) ((_retcode) != (MY_OK))
+#define MY_FAILURE(_retcode) ((_retcode) != (MY_OK))
 
 #define DIAG_RETURN_ON_ERROR(_function, _retcode) \
-  if (EHSL_CPSS_FAILURE(_retcode)) { \
+  if (MY_FAILURE(_retcode)) { \
     printf("Line: %d in function: %s(), failed with error code: %d => %s\n", __LINE__, _function, _retcode, BLOCK_ERROR_CODE_TO_STRING(_retcode)); \
     return DIAG_PRODTEST_FAILURE; \
   }
