@@ -10,6 +10,10 @@
 #include <stdlib.h>
 #include <inttypes.h>
  
+#define READY	0x0001
+#define STEADY	0x0002
+#define GO	0x0004
+
  
 enum designFlags {
                   BOLD      = 1,
@@ -21,6 +25,7 @@ enum designFlags {
 int main()
 {
     int myDesign = BOLD | UNDERLINE; 
+    int myJumper;
 
     //    00000001
     //  | 00000100
@@ -38,6 +43,9 @@ int main()
     {
         printf("Bold is selected\n");
     }
+
+    myJumper = READY | STEADY;
+    printf("Jumper is: %02x\n", myJumper);
 
     return 0;
 }
