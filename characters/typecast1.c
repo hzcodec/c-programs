@@ -14,10 +14,10 @@
  
 void f2(void *data, int size)
 {
-    // need to type cast input parameter
+    // to type cast input parameter to uint8_t
     printf("%s() - data: %d\n", __func__, *(uint8_t*)data);
 
-    // need to type cast input parameter
+    // type cast input parameter to char
     printf("%s() - data: %c\n", __func__, *(char*)data);
 
     // print out all data
@@ -30,7 +30,7 @@ void f2(void *data, int size)
 
 void f1 (void* data, int size)
 {
-    // need to type cast input parameter
+    // to type cast input parameter to uint8_t
     printf("%s() - data: %d\n", __func__, *(uint8_t*)data);
 
     f2(data, size);
