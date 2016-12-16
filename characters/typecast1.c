@@ -15,10 +15,10 @@
 void f2(void *data, int sizeOfArray)
 {
     // to type cast input parameter to uint8_t
-    printf("%s() - data: %d\n", __func__, *(uint8_t*)data);
+    printf("%s() - data (dec): %d\n", __func__, *(uint8_t*)data);
 
     // type cast input parameter to char
-    printf("%s() - data: %c\n", __func__, *(char*)data);
+    printf("%s() - data (chr): %c\n", __func__, *(char*)data);
 
     // print out all data
     for (int i=0; i<sizeOfArray; i++)
@@ -31,7 +31,7 @@ void f2(void *data, int sizeOfArray)
 void f1 (void* data, int sizeOfArray)
 {
     // to type cast input parameter to uint8_t
-    printf("%s() - data: %d\n", __func__, *(uint8_t*)data);
+    printf("%s() - data (dec): %d\n", __func__, *(uint8_t*)data);
 
     f2(data, sizeOfArray);
 }
