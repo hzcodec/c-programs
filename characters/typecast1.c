@@ -12,7 +12,7 @@
 #include <string.h>
 #include <inttypes.h>
  
-void f2(void *data, int size)
+void f2(void *data, int sizeOfArray)
 {
     // to type cast input parameter to uint8_t
     printf("%s() - data: %d\n", __func__, *(uint8_t*)data);
@@ -21,19 +21,19 @@ void f2(void *data, int size)
     printf("%s() - data: %c\n", __func__, *(char*)data);
 
     // print out all data
-    for (int i=0; i<size; i++)
+    for (int i=0; i<sizeOfArray; i++)
     {
         printf("%s() - char: %c\n", __func__, ((char*)data)[i]);
     }
 }
 
 
-void f1 (void* data, int size)
+void f1 (void* data, int sizeOfArray)
 {
     // to type cast input parameter to uint8_t
     printf("%s() - data: %d\n", __func__, *(uint8_t*)data);
 
-    f2(data, size);
+    f2(data, sizeOfArray);
 }
  
 
