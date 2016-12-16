@@ -23,7 +23,7 @@ void f2(void *data, int sizeOfArray)
     // print out all data
     for (int i=0; i<sizeOfArray; i++)
     {
-        printf("%s() - char: %c\n", __func__, ((char*)data)[i]);
+        printf("%s() - data (dec): %d, char: %c\n", __func__, ((uint8_t*)data)[i], ((char*)data)[i]);
     }
 }
 
