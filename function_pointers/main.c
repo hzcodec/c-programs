@@ -20,6 +20,7 @@ static const GeneralFunction doActionsArray[] =
     doAction0,
     doAction1,
     doAction2,
+    doAction3,
 };
 
 
@@ -42,6 +43,14 @@ int main()
 	// call action functions with its in parameter
         doActionsArray[action](&coord);
     }
+
+    printf("---\n");
+    doActionsArray[Action1](&coord);
+
+    printf("---\n");
+    coord.x = 99;
+    coord.y = 88;
+    doActionsArray[Action3](&coord);
 
     return 0;
 }
