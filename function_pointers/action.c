@@ -12,9 +12,10 @@ void doAction0(Coordinate* coord)
 
 void doAction1(Coordinate* coord)
 {
-    int var = 10;
+    int var = 77;
     printf("%s() - x: %d, y: %d\n", __func__, coord->x, coord->y);
     printf("Return value: %d\n", coord->exec(22));
+    coord->operation(&var);
 }
 
 
@@ -33,15 +34,20 @@ void doAction3(Coordinate* coord)
     coord->operation(&var);
 }
 
+int execute_operation(int a)
+{
+    printf("%s() ...", __func__);
+    return a*100;
+}
 
 void f1(int* var)
 {
     printf("%s() - var:%d\n", __func__, *var);
 }
 
-int execute_operation(int a)
+void f2(int* var)
 {
-    printf("%s() ...", __func__);
-    return a*100;
+    printf("%s() - var:%d\n", __func__, *var);
 }
+
 

@@ -29,6 +29,7 @@ void doAction2(Coordinate* coord);
 void doAction3(Coordinate* coord);
 
 void f1(int* var);
+void f2(int* var);
 int execute_operation(int a);
 int execute_operation2(int a);
 

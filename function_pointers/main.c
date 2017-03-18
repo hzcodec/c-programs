@@ -50,6 +50,7 @@ int main()
     printf("---\n");
     coord.x = 99;
     coord.y = 88;
+    coord.operation = f2;
     doActionsArray[Action3](&coord);
 
     return 0;
