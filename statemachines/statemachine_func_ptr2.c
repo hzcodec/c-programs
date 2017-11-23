@@ -10,6 +10,11 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
+#define ENUM2STRING(_str) _str == STATE_A ? "STATE_A" : \
+                          _str == STATE_B ? "STATE_B" : \
+                          _str == STATE_C ? "STATE_C" : \
+                          _str == STATE_D ? "STATE_D" : "UNKNOWN"
+
 
 // function prototypes
 void Sm_StateA(int a);
@@ -82,7 +87,7 @@ void Sm_Run(int var)
     (*StateMachine[SmState].func)(var);
 
     // just print out next state for test purpose
-    printf("Next state: %d\n", StateMachine[SmState].State);
+    printf("Next state: %s\n", ENUM2STRING(StateMachine[SmState].State));
   }
   else
   {
