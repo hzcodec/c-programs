@@ -4,7 +4,6 @@
     File         : statemachine2.c
     Reference    : -
     Description  : Statemachine with a table.
-    		   N.B!  Not finished.
 */ 
  
 #include <stdio.h>
