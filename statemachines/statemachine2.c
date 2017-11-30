@@ -10,6 +10,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+
+static bool buttonPressed = false;
 
 #define STATE_NAME_2_STRING(_str) _str == STATE_START ? "STATE_START" : \
                                   _str == STATE_INITIALIZED ? "STATE_INITIALIZED" : \
@@ -36,19 +39,21 @@ typedef struct {
 
 
 static stateFunction_t stateFunctionA[] = {
-    {"STATE_START",   &led_init},
+    {"STATE_START",         &led_init},
     {"STATE_INITIALIZED",   &led_initialized},
-    {"STATE_ERROR",   &led_error},
-    {"STATE_IDLE",   &led_idle},
-    {"STATE_GO",   &led_go},
+    {"STATE_ERROR",         &led_error},
+    {"STATE_IDLE",          &led_idle},
+    {"STATE_GO",            &led_go},
 };
 
+// define events
 typedef enum {
     EV_INIT,
     EV_ERROR,
     EV_IDLE,
 } events_t;
 
+// define states
 typedef enum {
     STATE_START,
     STATE_INITIALIZED,
@@ -70,7 +75,7 @@ typedef struct {
 // FSM table
 FSM_t fsm_events[] = {
 		      //  current state     event       next state
-                      { STATE_START,        EV_INIT,    STATE_INITIALIZED  },
+                      { STATE_START,        EV_IDLE,    STATE_INITIALIZED  },
                       { STATE_START,        EV_ERROR,   STATE_ERROR        },
                       { STATE_INITIALIZED,  EV_IDLE,    STATE_IDLE         },
                       { STATE_GO,           EV_ERROR,   STATE_IDLE         },
@@ -82,16 +87,23 @@ void StateMachine_Init(stateMachine_t * stateMachine) {
     stateMachine->currentState = STATE_START;
 }
 
+
 const char * StateMachine_GetStateName(states_t state) {
     printf("%s() - ", __func__);
-
-    //return stateFunctionA[state].name;
+    return stateFunctionA[state].name;
 }
 
-int fsm_get_event(void)
+
+int StateMachine_getEvent(void)
 {
-    return EV_INIT;
+    if (buttonPressed)
+    {
+        printf("%s() - buttonPressed=%d\n", __func__, buttonPressed);
+	buttonPressed = false;
+        return EV_IDLE;
+    }
 }
+
 
 int main(int argc, char *argv[])
 {
@@ -101,7 +113,9 @@ int main(int argc, char *argv[])
     printf("%s() - State is now: %s\n", __func__, STATE_NAME_2_STRING(stateMachine.currentState));
     int size_of_FSM_struct =  (sizeof(fsm_events) / sizeof(fsm_events[0]));
 
-    events_t event = fsm_get_event();
+    buttonPressed = true;
+
+    events_t event = StateMachine_getEvent();
     printf("event=%s\n", EVENT_NAME_2_STRING(event));
 
     // find state and event
@@ -116,13 +130,14 @@ int main(int argc, char *argv[])
 
 		// call associated function for the current transition
 	        (stateFunctionA[stateMachine.currentState].func)();
+		break;
 	    }
 	}
 
-    else
-    {
-        printf("No hit\n");
-    }
+        else
+        {
+            printf("No hit\n");
+        }
     }
 
     return 0;
