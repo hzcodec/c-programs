@@ -11,34 +11,23 @@
 #include <stdlib.h>
 #include <string.h>
 
-//#define STATE_NAME_2_STRING(_str) _str == STATE_START ? "STATE_START" : \
-//                                  _str == STATE_INITIALIZED ? "STATE_INITIALIZED" : \
-//                                  _str == STATE_ERROR ? "STATE_ERROR" : \
-//                                  _str == STATE_IDLE ? "STATE_IDLE" : \
-//                                  _str == STATE_BLOCK ? "STATE_BLOCK" : \
-//                                  _str == STATE_GO ? "STATE_GO" : "UNKNOWN"
-//
-//#define EVENT_NAME_2_STRING(_str) _str == EV_NONE ? "EV_NONE" : \
-//                                  _str == EV_INIT ? "EV_INIT" : \
-//                                  _str == EV_ERROR ? "EV_ERROR" : \
-//                                  _str == EV_IDLE ? "EV_IDLE" : "UNKNOWN"
-//
-
-void led_init() {};
-void led_initialized() {};
-void led_error() {};
-void led_idle() {};
-void led_go() {};
-
-/* FSM actions and transitions */
-//struct FSM{
-//   states_t state;
-//   events_t event;
-//   int (*fn)(void);
-//};
 #define STATE_NAME_2_STRING(_str) _str == STATE_START ? "STATE_START" : \
                                   _str == STATE_INITIALIZED ? "STATE_INITIALIZED" : \
+                                  _str == STATE_ERROR ? "STATE_ERROR" : \
+                                  _str == STATE_IDLE ? "STATE_IDLE" : \
                                   _str == STATE_GO ? "STATE_GO" : "UNKNOWN"
+
+#define EVENT_NAME_2_STRING(_str) _str == EV_INIT ? "EV_INIT" : \
+                                  _str == EV_ERROR ? "EV_ERROR" : \
+                                  _str == EV_IDLE ? "EV_IDLE" : "UNKNOWN"
+
+
+void led_init() {printf("%s() - \n", __func__);}
+void led_initialized() {printf("%s() - \n", __func__);}
+void led_error() {printf("%s() - \n", __func__);}
+void led_idle() {printf("%s() - \n", __func__);}
+void led_go() {printf("%s() - \n", __func__);}
+
 
 typedef struct {
     const char* name;
@@ -101,7 +90,7 @@ const char * StateMachine_GetStateName(states_t state) {
 
 int fsm_get_event(void)
 {
-    return EV_ERROR;
+    return EV_INIT;
 }
 
 int main(int argc, char *argv[])
@@ -113,6 +102,7 @@ int main(int argc, char *argv[])
     int size_of_FSM_struct =  (sizeof(fsm_events) / sizeof(fsm_events[0]));
 
     events_t event = fsm_get_event();
+    printf("event=%s\n", EVENT_NAME_2_STRING(event));
 
     // find state and event
     for (int check_state=0; check_state<size_of_FSM_struct; check_state++)
@@ -121,6 +111,10 @@ int main(int argc, char *argv[])
         {
             if (fsm_events[check_state].event == event)
 	    {
+		// transition to next state
+	        stateMachine.currentState = fsm_events[check_state].nextState;
+
+		// call associated function for the current transition
 	        (stateFunctionA[stateMachine.currentState].func)();
 	    }
 	}
