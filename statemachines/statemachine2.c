@@ -24,28 +24,11 @@
 //                                  _str == EV_IDLE ? "EV_IDLE" : "UNKNOWN"
 //
 
-//int initialize(void)
-//{
-//    /* Initialize FSM here */
-//    printf("  %s() - \n", __func__);
-//
-//    return (STATE_INITIALIZED);
-//}
-//
-//int error_handler(void)
-//{
-//    printf("  %s() - \n", __func__);
-//
-//    return (STATE_START);
-//}
-//
-//int idle_handler(void)
-//{
-//    printf("  %s() - \n", __func__);
-//
-//    return (STATE_START);
-//}
-
+void led_init() {};
+void led_initialized() {};
+void led_error() {};
+void led_idle() {};
+void led_go() {};
 
 /* FSM actions and transitions */
 //struct FSM{
@@ -56,6 +39,20 @@
 #define STATE_NAME_2_STRING(_str) _str == STATE_START ? "STATE_START" : \
                                   _str == STATE_INITIALIZED ? "STATE_INITIALIZED" : \
                                   _str == STATE_GO ? "STATE_GO" : "UNKNOWN"
+
+typedef struct {
+    const char* name;
+    void (*func)(void);
+} stateFunction_t;
+
+
+static stateFunction_t stateFunctionA[] = {
+    {"STATE_START",   &led_init},
+    {"STATE_INITIALIZED",   &led_initialized},
+    {"STATE_ERROR",   &led_error},
+    {"STATE_IDLE",   &led_idle},
+    {"STATE_GO",   &led_go},
+};
 
 typedef enum {
     EV_INIT,
@@ -72,28 +69,28 @@ typedef enum {
 } states_t;
 
 typedef struct {
-    states_t currState;
+    states_t currentState;
 } stateMachine_t;
 
 typedef struct {
-    states_t currState;
+    states_t currentState;
     events_t event;
     states_t nextState;
-} stateTransMatrixRow_t;
+} FSM_t;
 
 // FSM table
-stateTransMatrixRow_t fsm_events[] = {
-		                  //  current state     event       next state
-                                  { STATE_START,        EV_INIT,    STATE_INITIALIZED  },
-                                  { STATE_START,        EV_ERROR,   STATE_ERROR        },
-                                  { STATE_INITIALIZED,  EV_IDLE,    STATE_IDLE         },
-                                  { STATE_GO,           EV_ERROR,   STATE_IDLE         },
+FSM_t fsm_events[] = {
+		      //  current state     event       next state
+                      { STATE_START,        EV_INIT,    STATE_INITIALIZED  },
+                      { STATE_START,        EV_ERROR,   STATE_ERROR        },
+                      { STATE_INITIALIZED,  EV_IDLE,    STATE_IDLE         },
+                      { STATE_GO,           EV_ERROR,   STATE_IDLE         },
 };
 
 
 void StateMachine_Init(stateMachine_t * stateMachine) {
     printf("%s() - Initializing state machine\n", __func__);
-    stateMachine->currState = STATE_START;
+    stateMachine->currentState = STATE_START;
 }
 
 const char * StateMachine_GetStateName(states_t state) {
@@ -112,39 +109,27 @@ int main(int argc, char *argv[])
     stateMachine_t stateMachine;
     StateMachine_Init(&stateMachine);
 
-    printf("%s() - State is now: %s\n", __func__, STATE_NAME_2_STRING(stateMachine.currState));
+    printf("%s() - State is now: %s\n", __func__, STATE_NAME_2_STRING(stateMachine.currentState));
+    int size_of_FSM_struct =  (sizeof(fsm_events) / sizeof(fsm_events[0]));
 
     events_t event = fsm_get_event();
 
-    //int size_of_FSM_struct =  (sizeof(fsm) / sizeof(fsm[0]));
+    // find state and event
+    for (int check_state=0; check_state<size_of_FSM_struct; check_state++)
+    {
+        if (fsm_events[check_state].currentState == stateMachine.currentState)
+        {
+            if (fsm_events[check_state].event == event)
+	    {
+	        (stateFunctionA[stateMachine.currentState].func)();
+	    }
+	}
 
-    //states_t current_state = STATE_START;
-    //printf("current state=%s\n", STATE_NAME_2_STRING(current_state));
-
-    //event = get_event();
-
-    //printf("%s() - event=%s\n", __func__, EVENT_NAME_2_STRING(event));
-
-    //// find state and event
-    //for (int check_state=0; check_state<size_of_FSM_struct; check_state++)
-    //{
-    //    if (fsm[check_state].state == current_state)
-    //    {
-    //        printf("%s() - current state OK\n", __func__);
-
-    //        // if event exists in table and corresponds to current state then call function
-    //        if (fsm[check_state].event == event)
-    //        {
-    //            printf("%s() - state=%s, event=%s\n", __func__, STATE_NAME_2_STRING(current_state), EVENT_NAME_2_STRING(event));
-    //            fsm[check_state].fn();
-    //    	break;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        printf("No matching state and event\n");
-    //    }
-    //}
+    else
+    {
+        printf("No hit\n");
+    }
+    }
 
     return 0;
 }
