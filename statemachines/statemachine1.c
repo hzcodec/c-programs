@@ -10,6 +10,17 @@
 #include <stdlib.h>
 #include <string.h>
 
+// define colors
+#define CNRM "\x1B[0m"
+#define CRED "\x1B[31m"
+#define CGRN "\x1B[32m"
+#define CYEL "\x1B[33m"
+#define CBLU "\x1B[34m"
+#define CMAG "\x1B[35m"
+#define CCYN "\x1B[36m"
+#define CWHT "\x1B[37m"
+#define BOLD "\x1B[1m"
+
 /* FSM States */
 typedef enum {
                STATE_START, 
@@ -89,11 +100,11 @@ int main(int argc, char *argv[])
     int size_of_FSM_struct =  (sizeof(fsm) / sizeof(fsm[0]));
 
     states_t current_state = STATE_START;
-    printf("current state=%s\n", STATE_NAME_2_STRING(current_state));
+    printf("%s() - current state=%s%s%s\n", __func__, CYEL, STATE_NAME_2_STRING(current_state), CNRM);
 
     event = get_event();
 
-    printf("%s() - event=%s\n", __func__, EVENT_NAME_2_STRING(event));
+    printf("%s() - event=%s%s%s\n", __func__, CRED, EVENT_NAME_2_STRING(event), CNRM);
 
     // find state and event
     for (int check_state=0; check_state<size_of_FSM_struct; check_state++)
@@ -105,7 +116,7 @@ int main(int argc, char *argv[])
 	    // if event exists in table and corresponds to current state then call function
             if (fsm[check_state].event == event)
             {
-                printf("%s() - state=%s, event=%s\n", __func__, STATE_NAME_2_STRING(current_state), EVENT_NAME_2_STRING(event));
+                printf("%s() - state=%s%s%s, event=%s%s%s\n", __func__, CYEL, STATE_NAME_2_STRING(current_state), CNRM, CRED, EVENT_NAME_2_STRING(event), CNRM);
                 fsm[check_state].fn();
 		break;
             }
