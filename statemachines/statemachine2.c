@@ -139,6 +139,8 @@ int main(int argc, char *argv[])
         }
     }
 
+    printf("State: %s\n", stateFunctionA[stateMachine.currentState].name);
+
     return 0;
 }
 
