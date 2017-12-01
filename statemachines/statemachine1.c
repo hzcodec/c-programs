@@ -116,7 +116,10 @@ int main(int argc, char *argv[])
 	    // if event exists in table and corresponds to current state then call function
             if (fsm[check_state].event == event)
             {
-                printf("%s() - state=%s%s%s, event=%s%s%s\n", __func__, CYEL, STATE_NAME_2_STRING(current_state), CNRM, CRED, EVENT_NAME_2_STRING(event), CNRM);
+                printf("%s() - state=%s%s%s, event=%s%s%s\n", __func__,       \
+		        CYEL, STATE_NAME_2_STRING(current_state), CNRM, CRED, \
+			EVENT_NAME_2_STRING(event), CNRM);
+
                 fsm[check_state].fn();
 		break;
             }
