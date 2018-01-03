@@ -70,13 +70,13 @@ static const struct state *main_fsm_impl(struct statemachine *sm, const struct e
     switch (ev->id)
     {
         case EV_ENTRY: {
+            statemachine_subscribe_do(sm);
             printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
 	    var1 = 10;
             return statemachine_event_handled();
         }
 
         case EV_INIT: {
-            statemachine_subscribe_do(sm);
             printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
             return &disabled;
         }
@@ -130,24 +130,23 @@ static const struct state *enabled_impl(struct statemachine *sm, const struct ev
     switch (ev->id) 
     {
         case EV_ENTRY: {
-        	printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
-
-        	return statemachine_event_handled();
+            statemachine_subscribe_do(sm);
+            printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
+            return statemachine_event_handled();
         }
 
         case EV_INIT: 
         {
-            statemachine_subscribe_do(sm);
             printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
             return &running;
         }
 
         case EV_DO: {
-        	if (flag1 == 0)
-		{
-		    return &disabled;
-		}
-		break;
+            if (flag1 == 0)
+	    {
+                return &disabled;
+	    }
+	    break;
 	}
 
         case EV_EXIT: {
@@ -166,12 +165,12 @@ static const struct state *running_impl(struct statemachine *sm, const struct ev
     switch (ev->id)
     {
 	case EV_ENTRY: {
+            statemachine_subscribe_do(sm);
             return statemachine_event_handled();
 	    break;
 	}
 
         case EV_INIT: {
-            statemachine_subscribe_do(sm);
             printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
             break;
         }

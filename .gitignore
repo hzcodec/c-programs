@@ -1,2 +1,4 @@
 *.out
 logging4
+hsm/hsm1/fsm
+hsm/hsm1/*.o
