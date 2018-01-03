@@ -248,6 +248,9 @@ static struct hsm_list *hsms;
 // =====================================================================================================================================
 int main(void)
 {
+
+    printf("%s\n\n\n", FSM_BLOCK);
+
     // build up HSM
     hsms = hsm_list_init(&hsms_storage);
     hsm_add(hsms, hsm_control_init());
