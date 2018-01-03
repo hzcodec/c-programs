@@ -118,7 +118,7 @@ static const struct state *disabled_impl(struct statemachine *sm, const struct e
 	        return &enabled;
 	    }
 
-            printf("%s() -%s%s%s, This only happens if flag=0\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
+            printf("%s() -%s%s%s, This only happens if flag1=0\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
 	    break;
 	}
 
