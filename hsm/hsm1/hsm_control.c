@@ -17,6 +17,10 @@
 		  |    |           |       |  +----------+  +----------+   |  |
 		  |    +-----------+       +-------------------------------+  |
 		  +-----------------------------------------------------------+
+
+
+	    What is the purpose of:
+              statemachine_subscribe_do(sm);
 */ 
  
 #include <stdlib.h>
@@ -26,7 +30,6 @@
 #include "hsm_main.h"
 #include "hsm_control.h"
 #include "types.h"
-#include "timer.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -34,13 +37,10 @@
 
 // prototypes for the test cases
 void trig_current_fsm(int id);
-void log_printf(char* file, const char* func, const struct event* e);
 
 
 struct main_fsm {
 	struct statemachine sm;
-	enum ctrl_source new_control_source;
-	enum ctrl_source control_source;
 };
 
 
@@ -66,7 +66,6 @@ bool flag_active(void)
 
 static const struct state *main_fsm_impl(struct statemachine *sm, const struct event *ev)
 {
-    log_printf(__FILE__, __func__, ev);
 
     switch (ev->id)
     {
@@ -94,11 +93,11 @@ static const struct state *main_fsm_impl(struct statemachine *sm, const struct e
 
 static const struct state *disabled_impl(struct statemachine *sm, const struct event *ev)
 {
-    log_printf(__FILE__, __func__, ev);
 
     switch (ev->id)
     {
         case EV_ENTRY: {
+            statemachine_subscribe_do(sm);
             printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
 	    printf("%s() - var1=%d, var2=%d\n", __func__, var1, var2);
             return statemachine_event_handled();
@@ -128,12 +127,9 @@ static const struct state *disabled_impl(struct statemachine *sm, const struct e
 
 static const struct state *enabled_impl(struct statemachine *sm, const struct event *ev)
 {
-    log_printf(__FILE__, __func__, ev);
-
     switch (ev->id) 
     {
         case EV_ENTRY: {
-        	hsm_broadcast(sm, EV_CTRL_ENABLED, CTRL_SOURCE_LOCAL);
         	printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
 
         	return statemachine_event_handled();
@@ -141,6 +137,7 @@ static const struct state *enabled_impl(struct statemachine *sm, const struct ev
 
         case EV_INIT: 
         {
+            statemachine_subscribe_do(sm);
             printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
             return &running;
         }
@@ -154,7 +151,6 @@ static const struct state *enabled_impl(struct statemachine *sm, const struct ev
 	}
 
         case EV_EXIT: {
-        	hsm_broadcast(sm, EV_CTRL_DISABLED, CTRL_SOURCE_LOCAL);
         	printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
 
         	return statemachine_event_handled();
@@ -165,20 +161,17 @@ static const struct state *enabled_impl(struct statemachine *sm, const struct ev
 
 static const struct state *running_impl(struct statemachine *sm, const struct event *ev)
 {
-    struct main_fsm *c = container_of(sm, struct main_fsm, sm);
-
-    log_printf(__FILE__, __func__, ev);
     printf("%s() - var1=%d, var2=%d\n", __func__, var1, var2);
 
     switch (ev->id)
     {
 	case EV_ENTRY: {
-            c->control_source = CTRL_SOURCE_LOCAL;
             return statemachine_event_handled();
 	    break;
 	}
 
         case EV_INIT: {
+            statemachine_subscribe_do(sm);
             printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
             break;
         }
@@ -197,15 +190,12 @@ static const struct state *running_impl(struct statemachine *sm, const struct ev
 
 static const struct state *idle_impl(struct statemachine *sm, const struct event *ev)
 {
-    log_printf(__FILE__, __func__, ev);
-
     switch (ev->id) {
 
         case EV_ENTRY: {
-        	hsm_broadcast(sm, EV_CTRL_ENABLED, CTRL_SOURCE_LOCAL);
-        	printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
-
-        	return statemachine_event_handled();
+            statemachine_subscribe_do(sm);
+            printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
+            return statemachine_event_handled();
         }
 
         case EV_INIT: {
@@ -248,7 +238,8 @@ static struct hsm_list *hsms;
 
 
 // =====================================================================================================================================
-int main(int argc, char* argv[])
+//int main(int argc, char* argv[])
+int main(void)
 {
     // build up HSM
     hsms = hsm_list_init(&hsms_storage);
@@ -270,16 +261,5 @@ void trig_current_fsm(int id)
         hsm_process_queue(hsms);
     }
     printf("\n\n");
-}
-
-
-void log_printf(char* file, const char* func, const struct event* e)
-{
-//    printf("[%s]: %s%s()%s -%s%s%s -  flag1=%d\n", 
-//                                 file, 
-//				 BCYAN, func, NORM,
-//				 EVENTCOL, ENUM2STRING(e->id), NORM, 
-//				 flag1
-//				 );
 }
 
