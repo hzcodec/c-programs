@@ -159,7 +159,6 @@ static const struct state *enabled_impl(struct statemachine *sm, const struct ev
 
         case EV_EXIT: {
         	printf("%s() -%s%s%s\n", __func__, EVENTCOL2, ENUM2STRING(ev->id), NORM);
-
         	return statemachine_event_handled();
         }
     }
@@ -168,8 +167,6 @@ static const struct state *enabled_impl(struct statemachine *sm, const struct ev
 
 static const struct state *running_impl(struct statemachine *sm, const struct event *ev)
 {
-    printf("%s() - var1=%d, var2=%d\n", __func__, var1, var2);
-
     switch (ev->id)
     {
 	case EV_ENTRY: {
@@ -186,6 +183,8 @@ static const struct state *running_impl(struct statemachine *sm, const struct ev
         case EV_DO: {
 	    if (flag2 == 0)
 	    {
+                printf("%s() -%s%s%s\n", __func__, EVENTCOL4, ENUM2STRING(ev->id), NORM);
+                printf("%s() - var1=%d, var2=%d\n", __func__, var1, var2);
                 return &idle;
 	    }
             break;
@@ -219,6 +218,7 @@ static const struct state *idle_impl(struct statemachine *sm, const struct event
 
 	    else if (flag2 == 0)
 	    {
+               printf("%s() -%s%s%s\n", __func__, EVENTCOL5, ENUM2STRING(ev->id), NORM);
 	       var1 = 99;
 	       return &disabled; 
 	    }
