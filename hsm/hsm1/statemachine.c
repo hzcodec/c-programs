@@ -315,7 +315,7 @@ void statemachine_sendto(struct statemachine *sm, struct statemachine *dst,
 {
 	struct event ev = { id, data };
 	if (queue_put(dst->events, &ev)) {
-		// HzS LOG_DEBUG("%s->%s(%d,%lu)\n", sm->name, dst->name, id, data);
+		LOG_DEBUG("%s->%s(%d,%lu)\n", sm->name, dst->name, id, data);
 	} else {
 		// HzS LOG_DEBUG("%s event queue full\n", dst->name);
 	}

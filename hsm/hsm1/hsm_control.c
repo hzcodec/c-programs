@@ -44,8 +44,10 @@ struct main_fsm {
 };
 
 
+// define all states for the FSM
 STATE(main_fsm, main_fsm_impl, 0);
   STATE(disabled, disabled_impl, &main_fsm);
+
   STATE(enabled, enabled_impl, &main_fsm);
     STATE(running, running_impl, &enabled);
     STATE(idle, idle_impl, &enabled);
@@ -69,13 +71,13 @@ static const struct state *main_fsm_impl(struct statemachine *sm, const struct e
     switch (ev->id)
     {
         case EV_ENTRY: {
-            statemachine_subscribe_do(sm);
             printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
 	    var1 = 10;
             return statemachine_event_handled();
         }
 
         case EV_INIT: {
+            statemachine_subscribe_do(sm);
             printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
             return &disabled;
         }
