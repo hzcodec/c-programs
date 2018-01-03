@@ -66,7 +66,6 @@ bool flag_active(void)
 
 static const struct state *main_fsm_impl(struct statemachine *sm, const struct event *ev)
 {
-
     switch (ev->id)
     {
         case EV_ENTRY: {
@@ -93,7 +92,6 @@ static const struct state *main_fsm_impl(struct statemachine *sm, const struct e
 
 static const struct state *disabled_impl(struct statemachine *sm, const struct event *ev)
 {
-
     switch (ev->id)
     {
         case EV_ENTRY: {
@@ -237,7 +235,6 @@ static struct hsm_list *hsms;
 
 
 // =====================================================================================================================================
-//int main(int argc, char* argv[])
 int main(void)
 {
     // build up HSM
