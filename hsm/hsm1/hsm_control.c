@@ -18,9 +18,17 @@
 		  |    +-----------+       +-------------------------------+  |
 		  +-----------------------------------------------------------+
 
+                  Every state in a UML statechart can have optional entry actions, which are executed upon entry to a state, 
+		  as well as optional exit actions, which are executed upon exit from a state. 
+		  
+		  Entry and exit actions are associated with states, not transitions. Regardless of how a state is entered or exited, 
+		  all its entry and exit actions will be executed.
 
-	    What is the purpose of:
-              statemachine_subscribe_do(sm);
+
+                  What is the purpose of:
+                    statemachine_subscribe_do(sm);
+                    statemachine_unsubscribe_do(sm);
+                    statemachine_event_handled();
 */ 
  
 #include <stdlib.h>
@@ -131,13 +139,13 @@ static const struct state *enabled_impl(struct statemachine *sm, const struct ev
     {
         case EV_ENTRY: {
             statemachine_subscribe_do(sm);
-            printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
+            printf("%s() -%s%s%s\n", __func__, EVENTCOL2, ENUM2STRING(ev->id), NORM);
             return statemachine_event_handled();
         }
 
         case EV_INIT: 
         {
-            printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
+            printf("%s() -%s%s%s\n", __func__, EVENTCOL2, ENUM2STRING(ev->id), NORM);
             return &running;
         }
 
@@ -150,7 +158,7 @@ static const struct state *enabled_impl(struct statemachine *sm, const struct ev
 	}
 
         case EV_EXIT: {
-        	printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
+        	printf("%s() -%s%s%s\n", __func__, EVENTCOL2, ENUM2STRING(ev->id), NORM);
 
         	return statemachine_event_handled();
         }
@@ -171,7 +179,7 @@ static const struct state *running_impl(struct statemachine *sm, const struct ev
 	}
 
         case EV_INIT: {
-            printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
+            printf("%s() -%s%s%s\n", __func__, EVENTCOL3, ENUM2STRING(ev->id), NORM);
             break;
         }
 
@@ -193,12 +201,12 @@ static const struct state *idle_impl(struct statemachine *sm, const struct event
 
         case EV_ENTRY: {
             statemachine_subscribe_do(sm);
-            printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
+            printf("%s() -%s%s%s\n", __func__, EVENTCOL4, ENUM2STRING(ev->id), NORM);
             return statemachine_event_handled();
         }
 
         case EV_INIT: {
-            printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
+            printf("%s() -%s%s%s\n", __func__, EVENTCOL4, ENUM2STRING(ev->id), NORM);
             break;
         }
 
