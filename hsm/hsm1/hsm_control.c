@@ -220,6 +220,7 @@ static const struct state *idle_impl(struct statemachine *sm, const struct event
 	    {
                printf("%s() -%s%s%s\n", __func__, EVENTCOL5, ENUM2STRING(ev->id), NORM);
 	       var1 = 99;
+	       flag1 = 0;
 	       return &disabled; 
 	    }
             break;
