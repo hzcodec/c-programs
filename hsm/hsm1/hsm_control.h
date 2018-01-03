@@ -40,11 +40,13 @@
 #define BBLUE "\x1B[1m \x1B[34m" // bold + blue color
 #define BCYAN "\x1B[1m \x1B[36m" // bold + cyan color
 #define BRED "\x1B[1m \x1B[31m" // bold + red color
+#define BGRN "\x1B[1m \x1B[32m" // bold + green color
 
 #define EVENTCOL  BYEL  // color of event
 #define EVENTCOL2 BBLUE // color of event
 #define EVENTCOL3 BCYAN // color of event
 #define EVENTCOL4 BRED  // color of event
+#define EVENTCOL5 BGRN  // color of event
 
 #define MYCOL2    BCOL2 // 
 
