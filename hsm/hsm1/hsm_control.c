@@ -196,6 +196,11 @@ static const struct state *running_impl(struct statemachine *sm, const struct ev
 	    }
             break;
         }
+
+        case EV_EXIT: {
+        	printf("%s() -%s%s%s\n", __func__, EVENTCOL4, ENUM2STRING(ev->id), NORM);
+        	return statemachine_event_handled();
+        }
     }
     return 0;
 }
