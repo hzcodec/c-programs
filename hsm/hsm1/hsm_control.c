@@ -49,7 +49,8 @@ void trig_current_fsm(int id);
 
 struct main_fsm {
 	struct statemachine sm;
-};
+	int a;
+} myFSM;
 
 
 // define all states for the FSM
@@ -76,6 +77,12 @@ bool flag_active(void)
 
 static const struct state *main_fsm_impl(struct statemachine *sm, const struct event *ev)
 {
+    //                                ptr,       type,     member
+    struct main_fsm *m = container_of(sm, struct main_fsm, sm);
+    m->a = 99;
+    struct main_fsm *my = &myFSM;
+    my->a = 88;
+
     switch (ev->id)
     {
         case EV_ENTRY: {
