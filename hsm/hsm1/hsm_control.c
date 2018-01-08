@@ -165,7 +165,7 @@ static const struct state *enabled_impl(struct statemachine *sm, const struct ev
 	}
 
         case EV_EXIT: {
-        	printf("%s() -%s%s%s\n", __func__, EVENTCOL2, ENUM2STRING(ev->id), NORM);
+        	printf("%s() -%s%s%s\n", __func__, EVENTCOL3, ENUM2STRING(ev->id), NORM);
         	return statemachine_event_handled();
         }
     }
