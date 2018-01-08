@@ -86,19 +86,19 @@ static const struct state *main_fsm_impl(struct statemachine *sm, const struct e
     switch (ev->id)
     {
         case EV_ENTRY: {
-            printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
+            printf("%s() -%s%s%s\n", __func__, BMAG, ENUM2STRING(ev->id), NORM);
 	    var1 = 10;
             return statemachine_event_handled();
         }
 
         case EV_INIT: {
             statemachine_subscribe_do(sm);
-            printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
+            printf("%s() -%s%s%s\n", __func__, BMAG, ENUM2STRING(ev->id), NORM);
             return &disabled;
         }
     
         case EV_DO: {
-            printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
+            printf("%s() -%s%s%s\n", __func__, BMAG, ENUM2STRING(ev->id), NORM);
 	    printf("%s() - var1=%d, var2=%d\n", __func__, var1, var2);
             break;
         }

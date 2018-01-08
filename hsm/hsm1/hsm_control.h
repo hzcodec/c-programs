@@ -54,6 +54,7 @@
 #define BCYAN "\x1B[1m \x1B[36m" // bold + cyan color
 #define BRED "\x1B[1m \x1B[31m" // bold + red color
 #define BGRN "\x1B[1m \x1B[32m" // bold + green color
+#define BMAG "\x1B[1m \x1B[35m" // bold + green color
 
 #define EVENTCOL  BYEL  // color of event
 #define EVENTCOL2 BBLUE // color of event
