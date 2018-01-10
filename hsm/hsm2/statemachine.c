@@ -148,7 +148,7 @@ static void statemachine_transition_down(struct statemachine *sm, const struct s
 		assert(initial != &handled && initial != &self); /* Invalid return value for init event */
 		assert(target != initial); /* Initial transition cannot go to itself */
 		assert(target == lca(target, initial)); /* Initial transition must go to a substate */
-		// HzS LOG_DEBUG("%s::%s(initial) -> %s\n", sm->name, target->name, initial->name);
+		LOG_DEBUG("%s::%s(initial) -> %s\n", sm->name, target->name, initial->name);
 		statemachine_transition_down(sm, initial);
 	}
 }
