@@ -18,17 +18,8 @@
 		  |    +-----------+       +-------------------------------+  |
 		  +-----------------------------------------------------------+
 
-                  Every state in a UML statechart can have optional entry actions, which are executed upon entry to a state, 
-		  as well as optional exit actions, which are executed upon exit from a state. 
-		  
-		  Entry and exit actions are associated with states, not transitions. Regardless of how a state is entered or exited, 
-		  all its entry and exit actions will be executed.
-
-
-                  What is the purpose of:
-                    statemachine_subscribe_do(sm);
-                    statemachine_unsubscribe_do(sm);
-                    statemachine_event_handled();
+                  EV_INIT : must go to a sub state
+                  EV_INIT : cannot go to itself
 */ 
  
 #include <stdlib.h>
@@ -182,12 +173,6 @@ static const struct state *running_impl(struct statemachine *sm, const struct ev
             return statemachine_event_handled();
 	    //break;
 	}
-
-        case EV_INIT: {
-            printf("%s(1) -%s%s%s\n", __func__, EVENTCOL4, ENUM2STRING(ev->id), NORM);
-            return statemachine_event_handled();
-            //break;
-        }
 
         case EV_DO: {
 	    if (flag2 == 0)
