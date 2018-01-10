@@ -48,10 +48,7 @@ struct main_fsm {
 STATE(main_fsm, main_fsm_impl, 0);
   STATE(disabled, disabled_impl, &main_fsm);
   STATE(enabled, enabled_impl, &main_fsm);
-  //STATE(running, running_impl, &enabled);
   STATE(running, running_impl, &main_fsm);
-
-    //STATE(idle, idle_impl, &enabled);
 
 static struct main_fsm control_instance;
 
@@ -69,7 +66,6 @@ bool flag_active(void)
 
 static const struct state *main_fsm_impl(struct statemachine *sm, const struct event *ev)
 {
-    //                                ptr,       type,     member
     struct main_fsm *m = container_of(sm, struct main_fsm, sm);
     m->a = 99;
 
@@ -166,12 +162,14 @@ static const struct state *enabled_impl(struct statemachine *sm, const struct ev
 
 static const struct state *running_impl(struct statemachine *sm, const struct event *ev)
 {
+    struct main_fsm *m = container_of(sm, struct main_fsm, sm);
+    m->a = 88;
+
     switch (ev->id)
     {
 	case EV_ENTRY: {
             printf("%s(1) -%s%s%s\n", __func__, EVENTCOL4, ENUM2STRING(ev->id), NORM);
             return statemachine_event_handled();
-	    //break;
 	}
 
         case EV_DO: {
@@ -179,7 +177,6 @@ static const struct state *running_impl(struct statemachine *sm, const struct ev
 	    {
                 printf("%s(2) -%s%s%s\n", __func__, EVENTCOL4, ENUM2STRING(ev->id), NORM);
                 printf("%s(2) - var1=%d, var2=%d\n", __func__, var1, var2);
-                //return &idle;
                 return &enabled;
 	    }
             break;
@@ -190,43 +187,6 @@ static const struct state *running_impl(struct statemachine *sm, const struct ev
         	return statemachine_event_handled();
         }
     }
-    return 0;
-}
-
-
-static const struct state *idle_impl(struct statemachine *sm, const struct event *ev)
-{
-    switch (ev->id) {
-
-        case EV_ENTRY: {
-            statemachine_subscribe_do(sm);
-            printf("%s(1) -%s%s%s\n", __func__, EVENTCOL5, ENUM2STRING(ev->id), NORM);
-            return statemachine_event_handled();
-        }
-
-        case EV_INIT: {
-            printf("%s(2) -%s%s%s\n", __func__, EVENTCOL5, ENUM2STRING(ev->id), NORM);
-            break;
-        }
-
-        case EV_DO: {
-
-            if (flag2 != 0)
-            {
-	       return &disabled; 
-            }
-
-	    else if (flag2 == 0)
-	    {
-               printf("%s(3) -%s%s%s\n", __func__, EVENTCOL5, ENUM2STRING(ev->id), NORM);
-	       var1 = 99;
-	       flag1 = 0;
-	       return &disabled; 
-	    }
-            break;
-        }
-    }
-
     return 0;
 }
 
