@@ -5,18 +5,18 @@
     Reference    : -
     Description  : 
 
-                  +-----------------------------------------------------------+
-		  | main                                                      |
-		  |                                                           |
-		  |    +-----------+       +-------------------------------+  |
-		  |    | disabled  |       | enabled                       |  |
-		  |    |           |       |                               |  |
-		  |    |           |       |  +----------+  +----------+   |  |
-		  |    |           |       |  | running  |  | idle     |   |  |
-		  |    |           |       |  |          |  |          |   |  |
-		  |    |           |       |  +----------+  +----------+   |  |
-		  |    +-----------+       +-------------------------------+  |
-		  +-----------------------------------------------------------+
+                  +-------------------------------------------------------+
+                  | main                                                  |
+                  |                                                       |
+                  |    +-----------+     +-----------+   +-----------+    |
+                  |    | disabled  |     | enabled   |   | running   |    |
+                  |    |           |     |           |   |           |    |
+                  |    |           |     |           |   |           |    |
+                  |    |           |     |           |   |           |    |
+                  |    |           |     |           |   |           |    |
+                  |    |           |     |           |   |           |    |
+                  |    +-----------+     +-----------+   +-----------+    |
+                  +-------------------------------------------------------+
 
                   EV_INIT : must go to a sub state
                   EV_INIT : cannot go to itself
@@ -55,8 +55,6 @@ static struct main_fsm control_instance;
 
 static int flag1 = 1;
 static int flag2 = 0;
-static int var1;
-static int var2;
 
 
 bool flag_active(void)
@@ -73,7 +71,6 @@ static const struct state *main_fsm_impl(struct statemachine *sm, const struct e
     {
         case EV_ENTRY: {
             printf("%s(1) -%s%s%s\n", __func__, BMAG, ENUM2STRING(ev->id), NORM);
-	    var1 = 10;
             return statemachine_event_handled();
         }
 
@@ -85,7 +82,6 @@ static const struct state *main_fsm_impl(struct statemachine *sm, const struct e
     
         case EV_DO: {
             printf("%s(3) -%s%s%s\n", __func__, BMAG, ENUM2STRING(ev->id), NORM);
-	    printf("%s(3) - var1=%d, var2=%d\n", __func__, var1, var2);
             break;
         }
     }
@@ -95,17 +91,19 @@ static const struct state *main_fsm_impl(struct statemachine *sm, const struct e
 
 static const struct state *disabled_impl(struct statemachine *sm, const struct event *ev)
 {
+    struct main_fsm *m = container_of(sm, struct main_fsm, sm);
+    m->a = 77;
+
     switch (ev->id)
     {
         case EV_ENTRY: {
-            statemachine_subscribe_do(sm);
+            //statemachine_subscribe_do(sm);
             printf("%s(1) -%s%s%s\n", __func__, EVENTCOL2, ENUM2STRING(ev->id), NORM);
-	    printf("%s(1) - var1=%d, var2=%d\n", __func__, var1, var2);
             return statemachine_event_handled();
         }
 
         case EV_DO: {
-            if (flag1 == 1)
+            if (flag1 == 0)
 	    {
                 printf("%s(2) -%s%s%s\n", __func__, EVENTCOL2, ENUM2STRING(ev->id), NORM);
 	        return &enabled;
@@ -118,8 +116,6 @@ static const struct state *disabled_impl(struct statemachine *sm, const struct e
 
         case EV_EXIT: {
             printf("%s(3) -%s%s%s\n", __func__, EVENTCOL2, ENUM2STRING(ev->id), NORM);
-	    var1 = 30;
-	    var2 = 20;
             return statemachine_event_handled();
         }
     }
@@ -176,7 +172,6 @@ static const struct state *running_impl(struct statemachine *sm, const struct ev
 	    if (flag2 == 0)
 	    {
                 printf("%s(2) -%s%s%s\n", __func__, EVENTCOL4, ENUM2STRING(ev->id), NORM);
-                printf("%s(2) - var1=%d, var2=%d\n", __func__, var1, var2);
                 return &enabled;
 	    }
             break;
