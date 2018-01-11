@@ -82,6 +82,7 @@ static const struct state *main_fsm_impl(struct statemachine *sm, const struct e
     
         case EV_DO: {
             printf("%s(3) -%s%s%s\n", __func__, BMAG, ENUM2STRING(ev->id), NORM);
+	    flag2++;
             break;
         }
     }
@@ -103,7 +104,7 @@ static const struct state *disabled_impl(struct statemachine *sm, const struct e
         }
 
         case EV_DO: {
-            if (flag1 == 0)
+            if (flag1 == 1)
 	    {
                 printf("%s(2) -%s%s%s\n", __func__, EVENTCOL2, ENUM2STRING(ev->id), NORM);
 	        return &enabled;
@@ -111,7 +112,6 @@ static const struct state *disabled_impl(struct statemachine *sm, const struct e
 
             printf("%s() -%s%s%s, This only happens if flag1=0\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
             return statemachine_event_handled();
-	    //break;
 	}
 
         case EV_EXIT: {
@@ -169,7 +169,7 @@ static const struct state *running_impl(struct statemachine *sm, const struct ev
 	}
 
         case EV_DO: {
-	    if (flag2 == 0)
+	    if (flag2 == 3)
 	    {
                 printf("%s(2) -%s%s%s\n", __func__, EVENTCOL4, ENUM2STRING(ev->id), NORM);
                 return &enabled;
@@ -195,12 +195,12 @@ struct statemachine *hsm_control_init(void)
 }
 
 
-// =====================================================================================================================================
+// ================================================================================================================
 static struct hsm_list hsms_storage;
 static struct hsm_list *hsms;
 
 
-// =====================================================================================================================================
+// ================================================================================================================
 int main(void)
 {
 
@@ -212,7 +212,6 @@ int main(void)
     hsm_start_all(hsms);
 
     trig_current_fsm(ID1);
-    //trig_current_fsm(ID2);
 
     return 0;
 }
@@ -220,7 +219,7 @@ int main(void)
 
 void trig_current_fsm(int id)
 {
-    for (int i=0; i<6; i++)
+    for (int i=0; i<8; i++)
     {
 	printf("%s [%d.%d] %s\n", DELIMITER, id, i, DELIMITER);
         hsm_process_queue(hsms);
