@@ -70,12 +70,13 @@ static const struct state *main_fsm_impl(struct statemachine *sm, const struct e
     switch (ev->id)
     {
         case EV_ENTRY: {
+            statemachine_subscribe_do(sm);  // if this one is removed then the FSM stops at disabled
             printf("%s(1) -%s%s%s\n", __func__, BMAG, ENUM2STRING(ev->id), NORM);
             return statemachine_event_handled();
         }
 
         case EV_INIT: {
-            statemachine_subscribe_do(sm);
+            //statemachine_subscribe_do(sm);  // if this one is removed then the FSM stops
             printf("%s(2) -%s%s%s\n", __func__, BMAG, ENUM2STRING(ev->id), NORM);
             return &disabled;
         }
@@ -98,7 +99,6 @@ static const struct state *disabled_impl(struct statemachine *sm, const struct e
     switch (ev->id)
     {
         case EV_ENTRY: {
-            //statemachine_subscribe_do(sm);
             printf("%s(1) -%s%s%s\n", __func__, EVENTCOL2, ENUM2STRING(ev->id), NORM);
             return statemachine_event_handled();
         }
