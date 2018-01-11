@@ -13,7 +13,7 @@ TARGETDIR = /usr/local/bin
 all: $(TARGET)
 
 #$(TARGET): statemachine.o queue.o hsm_main.o hsm_power.o hsm_control.o test_fsm.o
-$(TARGET): statemachine.o queue.o hsm_control.o
+$(TARGET): statemachine.o queue.o hsm_control.o hsm_test.o
 	$(LINK.o) -o $@ $^
 
 install:

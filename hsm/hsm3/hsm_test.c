@@ -9,7 +9,7 @@
                   | main                                  |
                   |                                       |
                   |    +-----------+     +-----------+    |
-                  |    | disabled  |     | enabled   |    |
+                  |    | start     |     | end       |    |
                   |    |           |     |           |    |
                   |    |           |     |           |    |
                   |    |           |     |           |    |
@@ -27,32 +27,32 @@
 #include <time.h>
 
 #include "hsm_main.h"
-#include "hsm_control.h"
+#include "hsm_test.h"
 #include "types.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 
-struct main_fsm {
+struct sub_fsm {
 	struct statemachine sm;
 	int a;
-} myFSM;
+} subFSM;
 
 
-// define all states for the FSM
-STATE(main_fsm, main_fsm_impl, 0);
-  STATE(disabled, disabled_impl, &main_fsm);
-  STATE(enabled, enabled_impl, &main_fsm);
+// define all states for the sub FSM
+STATE(sub_fsm, sub_fsm_impl, 0);
+  STATE(start, start_impl, &sub_fsm);
+  STATE(end, end_impl, &sub_fsm);
 
-static struct main_fsm control_instance;
+static struct sub_fsm control_instance;
 
 
 static int flag1 = 1;
 static int flag2 = 0;
 
 
-static const struct state *main_fsm_impl(struct statemachine *sm, const struct event *ev)
+static const struct state *sub_fsm_impl(struct statemachine *sm, const struct event *ev)
 {
     struct main_fsm *m = container_of(sm, struct main_fsm, sm);
     m->a = 99;
@@ -68,12 +68,11 @@ static const struct state *main_fsm_impl(struct statemachine *sm, const struct e
         case EV_INIT: {
             //statemachine_subscribe_do(sm);  // if this one is removed then the FSM stops
             printf("%s(2) -%s%s%s\n", __func__, BMAG, ENUM2STRING(ev->id), NORM);
-            return &disabled;
+            return &start;
         }
     
         case EV_DO: {
             printf("%s(3) -%s%s%s\n", __func__, BMAG, ENUM2STRING(ev->id), NORM);
-	    flag2++;
             break;
         }
     }
@@ -81,7 +80,7 @@ static const struct state *main_fsm_impl(struct statemachine *sm, const struct e
     return 0;
 }
 
-static const struct state *disabled_impl(struct statemachine *sm, const struct event *ev)
+static const struct state *start_impl(struct statemachine *sm, const struct event *ev)
 {
     struct main_fsm *m = container_of(sm, struct main_fsm, sm);
     m->a = 77;
@@ -97,7 +96,7 @@ static const struct state *disabled_impl(struct statemachine *sm, const struct e
             if (flag1 == 1)
 	    {
                 printf("%s(2) -%s%s%s\n", __func__, EVENTCOL2, ENUM2STRING(ev->id), NORM);
-	        return &enabled;
+	        return &end;
 	    }
 
             printf("%s() -%s%s%s, This only happens if flag1=0\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
@@ -113,7 +112,7 @@ static const struct state *disabled_impl(struct statemachine *sm, const struct e
     return 0;
 }
 
-static const struct state *enabled_impl(struct statemachine *sm, const struct event *ev)
+static const struct state *end_impl(struct statemachine *sm, const struct event *ev)
 {
     switch (ev->id) 
     {
@@ -133,7 +132,7 @@ static const struct state *enabled_impl(struct statemachine *sm, const struct ev
         case EV_DO: {
             if (flag1 == 1)
 	    {
-                return &disabled;
+                return &start;
 	    }
 	    break;
 	}
@@ -146,7 +145,7 @@ static const struct state *enabled_impl(struct statemachine *sm, const struct ev
     return 0;
 }
 
-struct statemachine *hsm_control_init(void)
+struct statemachine *hsm_test_init(void)
 {
         printf("------------------ %s[%s] - %s() %s -------------------\n", BYEL,  __FILE__, __func__, NORM);
 	control_instance.sm.name = "main_fsm";
