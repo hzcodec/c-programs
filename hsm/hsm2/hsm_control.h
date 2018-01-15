@@ -10,15 +10,6 @@
                           _str == EV_ENTRY ? "EV_ENTRY" : \
                           _str == EV_EXIT ? "EV_EXIT" : \
                           _str == EV_DO ? "EV_DO" : \
-                          _str == EV_EM_STOP ? "EV_EM_STOP" : \
-                          _str == EV_CTRL_ENABLED ? "EV_CTRL_ENABLED" : \
-                          _str == EV_CTRL_RUN ? "EV_CTRL_RUN" : \
-                          _str == EV_CTRL_STOP ? "EV_CTRL_STOP" : \
-                          _str == EV_CTRL_DISABLED ? "EV_CTRL_DISABLED" : \
-                          _str == EV_STOP_REMOTE ? "EV_STOP_REMOTE" : \
-                          _str == CTRL_SOURCE_NONE ? "CTRL_SOURCE_NONE" : \
-                          _str == CTRL_SOURCE_CMD ? "CTRL_SOURCE_CMD" : \
-                          _str == CTRL_SOURCE_BT ? "CTRL_SOURCE_BT" : \
                           _str == CTRL_SOURCE_LOCAL ? "CTRL_SOURCE_LOCAL" : "UNKNOWN"
 
 #define FSM_BLOCK "      +-------------------------------------------------------+\n \
