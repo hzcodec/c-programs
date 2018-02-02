@@ -176,10 +176,12 @@ int get_request(char * url, char * port) {
 		printf("%s() - Host name is given\n", __func__);
 
                 if ((ptr = strstr(url, "/")) == NULL) {
-                //when hostname does not contain a slash
+                        //when hostname does not contain a slash
+			printf("%s() [%d] No slash\n", __func__, __LINE__);
                         sprintf(getrequest, "GET / HTTP/1.0\nHOST: %s\n\n", url);
                 } else {
                         //when hostname contains a slash, it is a path to file
+			printf("%s() [%d] Contains slash, path=%s, ptr=%s\n", __func__, __LINE__, path, ptr);
                         strcpy(path, ptr);
                         host = strtok(url, "/");
                         sprintf(getrequest, "GET %s HTTP/1.0\nHOST: %s\n\n", path, url);
@@ -209,7 +211,7 @@ int get_request(char * url, char * port) {
         printf("%s() - Connection successful...\n", __func__);
         ptr = strtok(path, "/");
         strcpy(path, ptr);
-        printf("%s() - path=%s, getrequest: %s\n\n", __func__, path, getrequest); 
+        printf("%s() [%d] - path=%s, ptr=%s, getrequest: %s\n\n", __func__, __LINE__, path, ptr, getrequest); 
         //fileptr = fopen(path, "w");
         //strcpy(fileName, path);
         //sprintf(fileName, "%s", path);
@@ -279,7 +281,7 @@ void openFile() {
         char fileName[1000];
     
         strcpy(fileName, path);
-        printf("%s() [%d] - File Name: %s\n", __func__, __LINE__, fileName);
+        printf("%s() [%d] - fileName: %s, path: %s\n", __func__, __LINE__, fileName, path);
         printf("%s() [%d] - Content Type: %s\n", __func__, __LINE__, contentFileType);
     
         if ((temp = strstr(contentFileType, "text/html")) != NULL) {
