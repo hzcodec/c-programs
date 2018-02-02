@@ -37,7 +37,9 @@ char status[4] = {0, 0, 0, 0};
 char contentFileType[100];
 char path[1000];
 
+
 int main(int argc, char**argv) {  
+
         struct sockaddr_in addr, cl_addr;  
         int sockfd, ret; 
         struct hostent * server;
@@ -59,7 +61,7 @@ int main(int argc, char**argv) {
    
         url = argv[1];
         portNumber = atoi(argv[2]);
-	printf("%s() - url:%s, portNumber=%d\n", __func__, url, portNumber);
+	printf("%s() [%d] - url:%s, portNumber=%d\n", __func__, __LINE__, url, portNumber);
 
    
         //checking the protocol specified
@@ -82,7 +84,7 @@ int main(int argc, char**argv) {
         }
     
         sockfd = get_request(url, argv[2]); 
-	printf("%s() - sockfd: %d\n", __func__, sockfd);
+	printf("%s() [%d] - sockfd: %d\n", __func__, __LINE__, sockfd);
    
         memset(&buffer, 0, sizeof(buffer));
         ret = recv(sockfd, buffer, BUF_SIZE, 0);  
@@ -115,19 +117,19 @@ int main(int argc, char**argv) {
 
         } else {
 
-         printf("%s() - %s\n", __func__, buffer);
+                printf("%s() - %s\n", __func__, buffer);
 
-                 if (parseHeader(buffer) == 0) {
-                         send(sockfd, status_ok, strlen(status_ok), 0);
-                 } else {
-                         printf("Error in HTTP header!\n");
-                         close(sockfd);
-                         return 0;
-                 }
+                if (parseHeader(buffer) == 0) {
+                        send(sockfd, status_ok, strlen(status_ok), 0);
+                } else {
+                        printf("Error in HTTP header!\n");
+                        close(sockfd);
+                        return 0;
+                }
         } 
    
-        printf("%s() - file: [%s], path: %s\n", __func__, fileName, path);
         fileptr = fopen(path, "w");
+        printf("%s() [%d] - file: [%s], path: %s\n", __func__, __LINE__, fileName, path);
 
         if (fileptr == NULL) {
                 printf("Error opening file!\n");
@@ -140,10 +142,10 @@ int main(int argc, char**argv) {
         while (recv(sockfd, buffer, BUF_SIZE, 0) > 0) { //receives the file
 
              if ((strstr(contentFileType, "text/html")) != NULL) {
-	             printf("%s() - If text/html\n", __func__);
+	             printf("%s() [%d] - If text/html\n", __func__, __LINE__);
                      fprintf(fileptr, "%s", buffer);
              } else {
-	             printf("%s() - *** WTF\n", __func__);
+	             printf("%s() - No text/html\n", __func__);
                      fwrite(&buffer, sizeof(buffer), 1, fileptr);
              }
 
@@ -236,7 +238,7 @@ int parseHeader(char * header) {
          char temp[100];
          int i = 0;
          line = strtok(header, "\n");
-	 printf("%s() - header: %s line: %s\n", __func__, header, line);
+	 printf("%s() [%d] - header: %s line: %s\n", __func__, __LINE__, header, line);
     
          while (line != NULL) {
                  printf("%s\n", line);
@@ -254,7 +256,7 @@ int parseHeader(char * header) {
     
          for (i = 0; i < 4; i++) {
              if (status[i] == 0) return 1;
-                     printf("status[%d]=%d\n", i, status[i]);
+                     printf("%s() [%d] - status[%d]=%d\n", __func__, __LINE__, i, status[i]);
              }
     
          return 0;
@@ -277,20 +279,23 @@ void openFile() {
         char fileName[1000];
     
         strcpy(fileName, path);
-        printf("%s() - File Name: %s\n", __func__, fileName);
-        printf("Content Type: %s\n", contentFileType);
+        printf("%s() [%d] - File Name: %s\n", __func__, __LINE__, fileName);
+        printf("%s() [%d] - Content Type: %s\n", __func__, __LINE__, contentFileType);
     
         if ((temp = strstr(contentFileType, "text/html")) != NULL) {
     
                 if ((temp = strstr(fileName, ".txt")) != NULL) {
+		        printf("%s() [%d] - Text file\n", __func__, __LINE__);
                         sprintf(command, "gedit %s", fileName);
                 } else {
+		        printf("%s() [%d] - HTTP file\n", __func__, __LINE__);
                         sprintf(command, "firefox %s", fileName);
                 }
     
                 system(command);
 
         } else if ((temp = strstr(contentFileType, "application/pdf")) != NULL) {
+		printf("%s() [%d] - PDF file\n", __func__, __LINE__);
                 sprintf(command, "acroread %s", fileName);
                 system(command);
     
