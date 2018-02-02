@@ -125,22 +125,24 @@ int main(int argc, char**argv) {
    
         //printf("file: [%s]\n", fileName);
         fileptr = fopen(path, "w");
+
         if (fileptr == NULL) {
-            printf("Error opening file!\n");
-            close(sockfd);
-            return 0;
+                printf("Error opening file!\n");
+                close(sockfd);
+                return 0;
         }
    
         memset(&buffer, 0, sizeof(buffer));
+
         while (recv(sockfd, buffer, BUF_SIZE, 0) > 0) { //receives the file
 
-         if ((strstr(contentFileType, "text/html")) != NULL) {
-             fprintf(fileptr, "%s", buffer);
-         } else {
-             fwrite(&buffer, sizeof(buffer), 1, fileptr);
-         }
+             if ((strstr(contentFileType, "text/html")) != NULL) {
+                     fprintf(fileptr, "%s", buffer);
+             } else {
+                     fwrite(&buffer, sizeof(buffer), 1, fileptr);
+             }
 
-         memset(&buffer, 0, sizeof(buffer));
+             memset(&buffer, 0, sizeof(buffer));
         }
    
         fclose(fileptr);
@@ -160,9 +162,11 @@ int get_request(char * url, char * port) {
         struct sockaddr_in addr;
        
         if (isValidIP(url)) { //when an IP address is given
+		printf("%s() - IP address is given\n", __func__);
                 sprintf(getrequest, "GET / HTTP/1.0\nHOST: %s\n\n", url);
 
         } else { //when a host name is given
+		printf("%s() - Host name is given\n", __func__);
 
                 if ((ptr = strstr(url, "/")) == NULL) {
                 //when hostname does not contain a slash
@@ -252,38 +256,40 @@ int parseHeader(char * header) {
 }
 
 char * splitKeyValue(char * line, int index) {
-    char * temp;
-    if ((temp = strstr(line, keys[index])) != NULL) {
-     temp = temp + strlen(keys[index]);
-     status[index] = 1;
-    }
+        char * temp;
 
-    return temp;
+        if ((temp = strstr(line, keys[index])) != NULL) {
+                temp = temp + strlen(keys[index]);
+                status[index] = 1;
+        }
+
+        return temp;
 }
 
 void openFile() {
-    char * temp;
-    char command[100];
-    char fileName[1000];
+        char * temp;
+        char command[100];
+        char fileName[1000];
+    
+        strcpy(fileName, path);
+        printf("%s() - File Name: %s\n", __func__, fileName);
+        printf("Content Type: %s\n", contentFileType);
+    
+        if ((temp = strstr(contentFileType, "text/html")) != NULL) {
+    
+                if ((temp = strstr(fileName, ".txt")) != NULL) {
+                        sprintf(command, "gedit %s", fileName);
+                } else {
+                        sprintf(command, "firefox %s", fileName);
+                }
+    
+                system(command);
 
-    strcpy(fileName, path);
-    //printf("File Name: %s\n", fileName);
-    //printf("Content Type: %s\n", contentFileType);
-
-    if ((temp = strstr(contentFileType, "text/html")) != NULL) {
-
-        if ((temp = strstr(fileName, ".txt")) != NULL) {
-         sprintf(command, "gedit %s", fileName);
+        } else if ((temp = strstr(contentFileType, "application/pdf")) != NULL) {
+                sprintf(command, "acroread %s", fileName);
+                system(command);
+    
         } else {
-         sprintf(command, "firefox %s", fileName);
+                printf("The filetype %s is not supported. Failed to open %s!\n", contentFileType, fileName);
         }
-
-    system(command);
-    } else if ((temp = strstr(contentFileType, "application/pdf")) != NULL) {
-        sprintf(command, "acroread %s", fileName);
-        system(command);
-
-    } else {
-        printf("The filetype %s is not supported. Failed to open %s!\n", contentFileType, fileName);
-    }
 }
