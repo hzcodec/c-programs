@@ -23,6 +23,7 @@
 #include <arpa/inet.h>
   
 #define BUF_SIZE 1024 
+#define MAX_PORT_NUMBER 65536
   
 int get_request(char * url, char * port);
 int isValidIP(char * ip);
@@ -52,8 +53,8 @@ int main(int argc, char**argv) {
         int sPos, ePos;
    
         if (argc < 3) {
-            printf("usage: [URL] [port number]\n");
-            exit(1);  
+                printf("usage: [URL] [port number]\n");
+                exit(1);  
         }
    
         url = argv[1];
@@ -75,7 +76,7 @@ int main(int argc, char**argv) {
 	}
    
         //checking the port number
-        if (portNumber > 65536 || portNumber < 0) {
+        if (portNumber > MAX_PORT_NUMBER || portNumber < 0) {
                 printf("Invalid Port Number!");
                 exit(1);
         }
