@@ -87,7 +87,7 @@ int main(int argc, char**argv) {
         memset(&buffer, 0, sizeof(buffer));
         ret = recv(sockfd, buffer, BUF_SIZE, 0);  
 
-	printf("%s() - ret: %d\n", __func__, ret);
+	printf("%s() [%d] - ret: %d\n", __func__, __LINE__, ret);
 
         if (ret < 0) {  
                 printf("[A] Error receiving HTTP status!\n");    
@@ -97,9 +97,11 @@ int main(int argc, char**argv) {
                 printf("%s\n", buffer);
 
                 if ((temp = strstr(buffer, http_ok)) != NULL) {
+		        printf("%s() [%d] - HTTP OK\n", __func__, __LINE__);
                         send(sockfd, status_ok, strlen(status_ok), 0);
 
                 } else {
+			printf("%s() [%d] - Close socket\n", __func__, __LINE__);
                         close(sockfd);
                         return 0;
                 }
@@ -124,7 +126,7 @@ int main(int argc, char**argv) {
                  }
         } 
    
-        //printf("file: [%s]\n", fileName);
+        printf("%s() - file: [%s], path: %s\n", __func__, fileName, path);
         fileptr = fopen(path, "w");
 
         if (fileptr == NULL) {
@@ -138,8 +140,10 @@ int main(int argc, char**argv) {
         while (recv(sockfd, buffer, BUF_SIZE, 0) > 0) { //receives the file
 
              if ((strstr(contentFileType, "text/html")) != NULL) {
+	             printf("%s() - If text/html\n", __func__);
                      fprintf(fileptr, "%s", buffer);
              } else {
+	             printf("%s() - *** WTF\n", __func__);
                      fwrite(&buffer, sizeof(buffer), 1, fileptr);
              }
 

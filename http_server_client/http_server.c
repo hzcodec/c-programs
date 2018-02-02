@@ -90,15 +90,18 @@ int main(int argc, char **argv) {
             sscanf(request, "%s %s %s", get, path, http);
             newpath = path + 1; //ignores the first slash
             sprintf(filepath,"%s/%s", dir, newpath);
+
             contentType = getFileType(newpath);
             sprintf(header, "Date: %sHostname: %s:%d\nLocation: %s\nContent-Type: %s\n\n", asctime(timeinfo), host, port, newpath, contentType);
+
+	    printf("%s() [%d] - filepath=%s, dir=%s, newpath=%s\n", __func__, __LINE__, filepath, dir, newpath);
     
             if ((fileptr = fopen(filepath, "r")) == NULL ) {
-                    printf("File not found!\n");
+                    printf("%s() [%d] - File not found!\n", __func__, __LINE__);
                     send(connfd, http_not_found, strlen(http_not_found), 0); //sends HTTP 404
 
             } else {
-                    printf("Sending the file...\n");
+                    printf("%s() [%d] - Sending the file...\n", __func__, __LINE__);
                     send(connfd, http_ok, strlen(http_ok), 0); //sends HTTP 200 OK  
                     recv(connfd, buffer, BUF_SIZE, 0);
     
@@ -203,7 +206,7 @@ int listenForRequest(int sockfd) {
 	// HzS printf("%s() - host:%s\n", __func__, host->h_name);
        
         //printf("---Connection received from: %s [IP= %s]---\n", host->h_name, hostip);
-        printf("%s() - Connection received:\n", __func__);
+        printf("%s() - -Connection received:\n", __func__);
     
         return conn;
 }
