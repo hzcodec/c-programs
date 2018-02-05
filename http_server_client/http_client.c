@@ -79,7 +79,7 @@ int main(int argc, char**argv) {
 	}
    
         //checking the port number
-        if (portNumber > MAX_PORT_NUMBER || MIN_PORT_NUMBER < 0) {
+        if (portNumber > MAX_PORT_NUMBER || portNumber < 0) {
                 printf("Invalid Port Number!");
                 exit(1);
         }
@@ -97,7 +97,7 @@ int main(int argc, char**argv) {
         } 
 
 	else {
-                printf("%s\n", buffer);
+                printf("%s() [%d] - %s\n", __func__, __LINE__, buffer);
 
                 if ((temp = strstr(buffer, http_ok)) != NULL) {
 		        printf("%s() [%d] - HTTP OK\n", __func__, __LINE__);
@@ -118,7 +118,7 @@ int main(int argc, char**argv) {
 
         } else {
 
-                printf("%s() - %s\n", __func__, buffer);
+                printf("%s() [%d] - %s\n", __func__, __LINE__, buffer);
 
                 if (parseHeader(buffer) == 0) {
                         send(sockfd, status_ok, strlen(status_ok), 0);
