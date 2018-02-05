@@ -18,6 +18,9 @@
 
 		   Or use nmap (this will kill the server)
 		       > nmap 10.239.181.182
+
+		   Or
+		       > netstat -a | grep 4444
 */ 
  
 #include"stdio.h"
