@@ -24,6 +24,7 @@
   
 #define BUF_SIZE 1024 
 #define MAX_PORT_NUMBER 65536
+#define MIN_PORT_NUMBER 0
   
 int get_request(char * url, char * port);
 int isValidIP(char * ip);
@@ -78,7 +79,7 @@ int main(int argc, char**argv) {
 	}
    
         //checking the port number
-        if (portNumber > MAX_PORT_NUMBER || portNumber < 0) {
+        if (portNumber > MAX_PORT_NUMBER || MIN_PORT_NUMBER < 0) {
                 printf("Invalid Port Number!");
                 exit(1);
         }
