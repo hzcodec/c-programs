@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
         host = argv[1];
         dir = argv[2];
         port = atoi(argv[3]);
-	printf("%s() - host: %s, dir: %s, port=%d\n", __func__, host, dir, port);
+	printf("%s() [%d] - host: %s, dir: %s, port=%d\n", __func__, __LINE__, host, dir, port);
        
         if ((dirptr = opendir(dir)) == NULL) {
              printf("Directory Not Found!\n");

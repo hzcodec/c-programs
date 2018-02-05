@@ -231,6 +231,7 @@ int isValidIP(char * ip) {
     struct sockaddr_in addr;
 
     int valid = inet_pton(AF_INET, ip, &(addr.sin_addr));
+    printf("%s() [%d] - valid=%d\n", __func__, __LINE__, valid);
     return valid != 0;
 }
 
