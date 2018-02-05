@@ -249,7 +249,7 @@ int parseHeader(char * header) {
 	 printf("%s() [%d] - header: %s line: %s\n", __func__, __LINE__, header, line);
     
          while (line != NULL) {
-                 printf("%s\n", line);
+                 printf("%s() [%d] - %s\n", __func__, __LINE__, line);
                  strcpy(temp, line);
                  value = splitKeyValue(line, i);  
     
@@ -272,14 +272,14 @@ int parseHeader(char * header) {
 
 char * splitKeyValue(char * line, int index) {
 
-        printf("%s() [%d] -\n", __func__, __LINE__);
-
         char * temp;
 
         if ((temp = strstr(line, keys[index])) != NULL) {
                 temp = temp + strlen(keys[index]);
                 status[index] = 1;
         }
+
+        printf("%s() [%d] - temp=%d\n", __func__, __LINE__, *temp);
 
         return temp;
 }
