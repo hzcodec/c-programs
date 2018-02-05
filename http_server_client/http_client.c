@@ -242,7 +242,10 @@ int parseHeader(char * header) {
          char * line, * key, * value;
          char temp[100];
          int i = 0;
+
+	 // split string into tokens
          line = strtok(header, "\n");
+
 	 printf("%s() [%d] - header: %s line: %s\n", __func__, __LINE__, header, line);
     
          while (line != NULL) {
@@ -268,6 +271,9 @@ int parseHeader(char * header) {
 }
 
 char * splitKeyValue(char * line, int index) {
+
+        printf("%s() [%d] -\n", __func__, __LINE__);
+
         char * temp;
 
         if ((temp = strstr(line, keys[index])) != NULL) {
