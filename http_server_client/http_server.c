@@ -86,14 +86,13 @@ int main(int argc, char **argv) {
         
         for (;;) {
     
-            printf("--------------------------------------------------------\n");
             printf("%s() - Waiting for a connection...\n", __func__);
 
             connfd = listenForRequest(sockfd);
     
             //gets the request from the connection
             recv(connfd, request, 100, 0);
-            printf("Processing request...\n");
+            printf("%s() [%d] - Processing request...\n", __func__, __LINE__);
     
             //parses request
             sscanf(request, "%s %s %s", get, path, http);
@@ -194,28 +193,29 @@ int listenForRequest(int sockfd) {
        
         listen(sockfd, 5); //maximum 5 connections
         len = sizeof(addr); 
-	printf("%s() - len=%d\n", __func__, len);
+	printf("%s() [%d] - len=%d\n", __func__, __LINE__, len);
+            printf("--------------------------------------------------------\n");
     
         if ((conn = accept(sockfd, (struct sockaddr *)&addr, &len)) < 0) {
                 printf("%s() - Error accepting connection!\n", __func__);
                 exit(1);
         }
     
-        printf("%s() - Connection accepted...\n", __func__);
+        printf("  %s() - Connection accepted...\n", __func__);
          
 	// convert IPv4 and IPv6 addresses from binary to text form
         inet_ntop(AF_INET, &(addr.sin_addr), hostip, 32);
-	printf("%s() - hostip=%s\n", __func__, hostip);
+	printf("  %s() - hostip=%s\n", __func__, hostip);
 
         // convert IPv4 and IPv6 addresses from text to binary form
         inet_pton(AF_INET, hostip, &inAddr);
-	printf("%s() - inAddr=%x\n", __func__, inAddr.s_addr);
+	printf("  %s() - inAddr=%x\n", __func__, inAddr.s_addr);
 
         // HzS host = gethostbyaddr(&inAddr, sizeof(inAddr), AF_INET);
 	// HzS printf("%s() - host:%s\n", __func__, host->h_name);
        
         //printf("---Connection received from: %s [IP= %s]---\n", host->h_name, hostip);
-        printf("%s() - -Connection received:\n", __func__);
+        printf("  %s() - -Connection received:\n", __func__);
     
         return conn;
 }
