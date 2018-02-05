@@ -229,6 +229,7 @@ int get_request(char * url, char * port) {
 
 int isValidIP(char * ip) {
     struct sockaddr_in addr;
+
     int valid = inet_pton(AF_INET, ip, &(addr.sin_addr));
     return valid != 0;
 }

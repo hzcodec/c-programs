@@ -12,6 +12,12 @@
                    NB: The requested files abc.txt, abc.html and abc.pdf should be present in 
 		   the path '/home/dhanoopbhaskar/coding/http/dir/' 
 		   (or whatever is given while running server).
+
+		   To check if a port is used or not in Linux.
+		       > netstat -ltun
+
+		   Or use nmap (this will kill the server)
+		       > nmap 10.239.181.182
 */ 
  
 #include"stdio.h"
