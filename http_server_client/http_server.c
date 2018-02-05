@@ -194,7 +194,7 @@ int listenForRequest(int sockfd) {
         listen(sockfd, 5); //maximum 5 connections
         len = sizeof(addr); 
 	printf("%s() [%d] - len=%d\n", __func__, __LINE__, len);
-            printf("--------------------------------------------------------\n");
+        printf("--------------------------------------------------------\n");
     
         if ((conn = accept(sockfd, (struct sockaddr *)&addr, &len)) < 0) {
                 printf("%s() - Error accepting connection!\n", __func__);
@@ -222,6 +222,8 @@ int listenForRequest(int sockfd) {
 
 char * getFileType(char * file) {
         char * temp;
+
+	printf("%s() [%d] - file=%s\n", __func__, __LINE__, file);
     
         if ((temp = strstr(file, ".html")) != NULL) {
                 return "text/html";
