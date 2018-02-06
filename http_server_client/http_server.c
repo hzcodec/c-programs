@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
     
             //gets the request from the connection
             recv(connfd, request, 100, 0);
-            printf("%s() [%d] - Processing request...\n", __func__, __LINE__);
+            printf("%s() [%d] - Processing request..., request=%s\n", __func__, __LINE__, request);
     
             //parses request
             sscanf(request, "%s %s %s", get, path, http);
@@ -145,7 +145,6 @@ int main(int argc, char **argv) {
         free(header);
         free(request);
         free(path);
-        free(newpath);
        
         return 0;
 }
