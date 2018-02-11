@@ -3,7 +3,9 @@
     Date         : 2018-02-11
     File         : container_of1.c
     Reference    : -
-    Description  : Test of container_of(...); 
+    Description  : Test of container_of(ptr, struct str, member); 
+                   First parameter refers to the name of the pointer.
+		   The second parameter refers to the structure member.
 */ 
  
 #include <stdlib.h>
@@ -29,10 +31,11 @@ int main()
 	struct numbers *n_ptr;
 
 	n_ptr = container_of(ptr, struct numbers, three);
-	printf("ptr=%p, n_ptr=%p\n", ptr, n_ptr);
+	printf("ptr=%p, n_ptr=%p\n", ptr, onen_ptr);
 
 	printf("one=%d, two=%d, three=%d\n", n_ptr->one, n_ptr->two, n_ptr->three);
 	printf("ptr.one=%d, ptr.two=%d\n", n_ptr->one, n_ptr->two);
 
         return 0;
 }
+
