@@ -191,6 +191,7 @@ int get_request(char * url, char * port) {
        
         // creates a socket to the host
         sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	printf("%s() [%d] - sockfd: %d\n", __func__, __LINE__, sockfd);
     
         if (sockfd < 0) {  
                 printf("Error creating socket!\n");  
@@ -204,7 +205,9 @@ int get_request(char * url, char * port) {
         addr.sin_addr.s_addr = inet_addr(url);
         addr.sin_port = htons(atoi(port));
        
-        if (connect(sockfd, (struct sockaddr *) &addr, sizeof(addr)) < 0 ) {
+        //if (connect(sockfd, (struct sockaddr *) &addr, sizeof(addr)) < 0 ) {
+        if (connect(sockfd, (struct sockaddr *)&addr, sizeof(struct sockaddr)) < 0 ) {
+		perror("Connection Error ");
                 printf("%s() - Connection Error!\n", __func__);
                 exit(1);
         }
@@ -213,6 +216,7 @@ int get_request(char * url, char * port) {
         ptr = strtok(path, "/");
         strcpy(path, ptr);
         printf("%s() [%d] - path=%s, ptr=%s, getrequest: %s\n\n", __func__, __LINE__, path, ptr, getrequest); 
+
         //fileptr = fopen(path, "w");
         //strcpy(fileName, path);
         //sprintf(fileName, "%s", path);

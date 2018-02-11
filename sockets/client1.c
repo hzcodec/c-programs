@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     server_info.sin_port   = htons(PORT);
     server_info.sin_addr   = *((struct in_addr *)he->h_addr);
 
-    if (connect(socket_fd, (struct sockaddr *)&server_info, sizeof(struct sockaddr))<0)
+    if (connect(socket_fd, (struct sockaddr *)&server_info, sizeof(struct sockaddr)) <0)
       {
         perror("connect");
         exit(1);
