@@ -31,10 +31,13 @@ int main()
 	// Get the parent struct which contains out pointer (ptr).
 	// We give the type as 2nd parameter (my_struct_t) and the
 	// name of the member ('data').
-	my_struct_t *t2 = (my_struct_t *)container_of(&t.data, my_struct_t, data);
+	// You can use either of the members.
+	//my_struct_t *t2 = (my_struct_t *)container_of(&t.data, my_struct_t, data);
+	//my_struct_t *t2 = (my_struct_t *)container_of(&t.f, my_struct_t, f);
+	my_struct_t *t2 = (my_struct_t *)container_of(&t.name, my_struct_t, name);
 
 	// now t2 is equal to the parent of the member 'data'
-	printf("%s\n", t2->name);
+	printf("data=%d, name=%s, f=%.2f\n", t2->data, t2->name, t2->f);
 
         return 0;
 }
