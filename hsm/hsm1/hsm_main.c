@@ -16,16 +16,6 @@
 #include "types.h"
 #include "timer.h"
 #include "hsm_control.h"
-// HzS -  #include "hsm_can.h"
-// HzS -  #include "brake.h"
-// HzS -  #include "motor.h"
-// HzS -  #include "trajec.h"
-// HzS -  #include "temp.h"
-// HzS -  #include "log.h"
-// HzS -  #include "param.h"
-// HzS - #include "boot_api.h"
-// HzS - #include "m24c08.h"
-// HzS - #include "acc_g3_can.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
