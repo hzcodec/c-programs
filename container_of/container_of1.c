@@ -3,7 +3,9 @@
     Date         : 2018-02-11
     File         : container_of1.c
     Reference    : -
-    Description  : Test of container_of(ptr, struct str, member); 
+    Description  : How to get the parent structure by its member.
+
+                   Test of container_of(ptr, struct str, member); 
                    First parameter refers to the name of the pointer.
 		   The second parameter refers to the structure member.
 */ 
