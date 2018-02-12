@@ -1,16 +1,3 @@
-//============================================================================
-//
-// $URL: $
-// $Revision: $
-// $Date: $
-// $Author: $
-//
-// Description :
-//
-// Copyright   : UNJO AB
-//
-//============================================================================
-
 #include <stdlib.h>
 #include "hsm_main.h"
 #include "types.h"
@@ -19,16 +6,6 @@
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-
-#ifndef DELAY_MOTOR
-#define DELAY_MOTOR 10
-#endif
-#ifndef DELAY_BRAKE
-#define DELAY_BRAKE 100
-#endif
-#ifndef DELAY_ERROR
-#define DELAY_ERROR 3000
 #endif
 
 struct main_sm {
@@ -49,7 +26,7 @@ STATE(init, init_impl, &main_sm);
 STATE(wait_for_power, wait_for_power_impl, &main_sm);
 STATE(wait_for_wakeup, wait_for_wakeup_impl, &main_sm);
 STATE(wait_for_button, wait_for_button_impl, &main_sm);
-STATE(check_supply, check_supply_impl, &main_sm);
+//STATE(check_supply, check_supply_impl, &main_sm);
 STATE(shutdown, shutdown_impl, &main_sm);
 STATE(wait_shutdown, wait_shutdown_impl, &main_sm);
 STATE(enter_boot, enter_boot_impl, &main_sm);
@@ -230,12 +207,6 @@ static const struct state *wait_for_power_impl(struct statemachine *sm, const st
 		return &powered;
 	}
 	case EV_CAN_FAIL: {
-		 // HzS - if (param.psu_ok) {
-		// HzS - 	return &check_supply;
-		// HzS - } else {
-		// HzS - 	// HzS -  log_event(LOG_EV_POWER_OFF_BAT);
-		// HzS - 	return &error;
-		// HzS - }
 	}
 	}
 	return 0;
@@ -689,14 +660,6 @@ static const struct state *bist_step_6_impl(struct statemachine *sm, const struc
 	{
 		case EV_ENTRY:
 		{
-			// HzS -  timer_set(&m->t_bist, 200);
-			/* Prepare test */
-			// HzS -  m->brake_test.start_pos = motor_get_position();
-			// HzS -  m->brake_test.max_diff = 0;
-			// HzS -  motor_manual_mode(MAN_CURRENT);
-			// HzS -  motor_set_iq(0, mul(param.brake_test.pos_curr, param.motor.cl_param.max));
-			// HzS -  motor_set_iq(1, mul(param.brake_test.pos_curr, param.motor.cl_param.max));
-			// HzS -  motor_enable();
 			return statemachine_event_handled();
 		}
 		case EV_EXIT:
@@ -707,17 +670,6 @@ static const struct state *bist_step_6_impl(struct statemachine *sm, const struc
 		}
 		case EV_DO:
 		{
-			// HzS -  s16b16 diff = abs_diff_pos(m->brake_test.start_pos, motor_get_position());
-			// HzS - if (m->brake_test.max_diff < diff) {
-			// HzS - 	m->brake_test.max_diff = diff;
-			// HzS - }
-			 // HzS - if (diff > float_s16b16(0.05)) {
-			// HzS - 	motor_disable();
-			// HzS - 	// HzS -  motor_manual_mode(MAN_NONE);
-			// HzS - 	// HzS -  log_event(LOG_EV_SELF_TEST_FAIL_BRAKE);
-			// HzS - 	return &error;
-			// HzS - } else if (timer_expired(&m->t_bist)) {
-			// HzS -  	LOG_DEBUG("Max diff: %F\n", m->brake_test.max_diff);
 				return &bist_step_7;
 			// HzS -  }
 			break;
@@ -742,32 +694,16 @@ static const struct state *bist_step_7_impl(struct statemachine *sm, const struc
 	{
 		case EV_ENTRY:
 		{
-			// HzS -  timer_set(&m->t_bist, 200);
 			/* Prepare test */
 			m->brake_test.max_diff = 0;
-			// HzS -  motor_set_iq(0, mul(param.brake_test.neg_curr, param.motor.cl_param.min));
-			// HzS -  motor_set_iq(1, mul(param.brake_test.neg_curr, param.motor.cl_param.min));
 			return statemachine_event_handled();
 		}
 		case EV_EXIT:
 		{
-			// HzS -  motor_disable();
-			// HzS -  motor_manual_mode(MAN_NONE);
-			// HzS -  motor_set_iq(0, 0);
-			// HzS -  motor_set_iq(1, 0);
 			return statemachine_event_handled();
 		}
 		case EV_DO:
 		{
-			// HzS - s16b16 diff = abs_diff_pos(m->brake_test.start_pos, motor_get_position());
-			// HzS - if (m->brake_test.max_diff < diff) {
-			// HzS - 	m->brake_test.max_diff = diff;
-			// HzS - }
-			// HzS - if (diff > float_s16b16(0.05)) {
-			// HzS - 	// HzS -  log_event(LOG_EV_SELF_TEST_FAIL_BRAKE);
-			// HzS - 	return &error;
-			// HzS - } else if (timer_expired(&m->t_bist)) {
-			// HzS - 	LOG_DEBUG("Max diff: %F\n", m->brake_test.max_diff);
 				return &active;
 			// HzS -  }
 			break;
@@ -790,18 +726,14 @@ static const struct state *error_impl(struct statemachine *sm, const struct even
 	struct main_sm *m = container_of(sm, struct main_sm, sm);
 	switch (ev->id) {
 	case EV_ENTRY: {
-		// HzS -  rgb_led_color(RGB_RED);
 		statemachine_subscribe_do(sm);
-		// HzS -  timer_set(&m->t_powered, DELAY_ERROR);
 		return statemachine_event_handled();
 	}
 	case EV_EXIT: {
-		// HzS -  rgb_led_color(RGB_OFF);
 		statemachine_unsubscribe_do(sm);
 		return statemachine_event_handled();
 	}
 	case EV_DO: {
-		// HzS -  if (timer_expired(&m->t_powered)) {
 		if (1 == 0) {
 			return &wait_shutdown;
 		}
@@ -816,13 +748,10 @@ static const struct state *temp_error_impl(struct statemachine *sm, const struct
 	struct main_sm *m = container_of(sm, struct main_sm, sm);
 	switch (ev->id) {
 	case EV_ENTRY: {
-		// HzS -  rgb_led_color(RGB_ORANGE);
 		statemachine_subscribe_do(sm);
-		// HzS -  timer_set(&m->t_powered, DELAY_ERROR);
 		return statemachine_event_handled();
 	}
 	case EV_EXIT: {
-		// HzS -  rgb_led_color(RGB_OFF);
 		statemachine_unsubscribe_do(sm);
 		return statemachine_event_handled();
 	}
@@ -855,22 +784,14 @@ static const struct state *active_impl(struct statemachine *sm, const struct eve
 		return &idle;
 	}
 	case EV_ENTRY: {
-		/* panel_enable() */
-		// HzS -  dio_set_output(DOUT_DRIVE_A_EN, true);  // HzS - drive what? 
-		// HzS -  dio_set_output(DOUT_DRIVE_B_EN, true);
-		// HzS -  rgb_led_color(RGB_GREEN);
 		control_local_enabled(true);            // HzS - activate throttle and green LED
 		return statemachine_event_handled();
 	}
 	case EV_EXIT: {
-		// HzS -  dio_set_output(DOUT_DRIVE_A_EN, false);
-		// HzS -  dio_set_output(DOUT_DRIVE_B_EN, false);
 		control_local_enabled(false);            // HzS - deactivate throttle and LED off
-		// HzS -  rgb_led_color(RGB_OFF);
 		return statemachine_event_handled();
 	}
 	case EV_BTN_HOLD: {
-		// HzS -  rgb_led_color(RGB_OFF);
 		return &wait_btn_release;
 	}
 	case EV_EM_STOP: {
@@ -927,16 +848,6 @@ static const struct state *multi_button_impl(struct statemachine *sm, const stru
 		return statemachine_event_handled();
 	}
 	case EV_DO: {
-		// HzS - if (timer_expired(&s->t_main)) {
-		// HzS - 	if (s->btn_count == 5) {
-		// HzS - 		return &bt_pair;
-		// HzS - 	} else if (s->btn_count == 2) {
-		// HzS - 		// HzS -  bool led_level = !led_get_brightness();
-		// HzS - 		// HzS -  led_set_brightness(led_level);
-		// HzS - 		// HzS -  rgb_led_set_brightness(led_level ? param.led_duty_hi : param.led_duty_lo);
-		// HzS - 	}
-		// HzS - 	return &idle;
-		// HzS - }
 		break;
 	}
 	}
@@ -980,16 +891,9 @@ static const struct state *drive_enabled_impl(struct statemachine *sm, const str
 		return &enabling;
 	}
 	case EV_ENTRY: {
-		// HzS -  trajec_reset();
-		// HzS -  motor_set_speed(trajec_get_speed());
-		// HzS -  motor_enable();
-		// HzS -  log_event(LOG_EV_START);
 		return statemachine_event_handled();
 	}
 	case EV_EXIT: {
-		// HzS -  motor_disable();
-		// HzS -  motor_set_speed(0);
-		// HzS -  log_event(LOG_EV_STOP);
 		return statemachine_event_handled();
 	}
 	case EV_CTRL_DISABLED:
@@ -1091,30 +995,6 @@ static const struct state *running_impl(struct statemachine *sm, const struct ev
 		}
 		case EV_DO:
 		{
-
-			/* If battery SOC is <= 8% only allow running down */
-
-			// HzS -  s16b16 targetspeed = mul(motor_get_max_speed(), control_get_value());
-
-			// HzS - if(BatterySOC > param.soc_limit_run_up)
-			// HzS - {
-			// HzS - 	trajec_set_target_speed(targetspeed);
-
-			// HzS - }
-			// HzS - else
-			// HzS - {
-			// HzS - 	if(targetspeed > 0)
-			// HzS - 	{
-			// HzS - 		trajec_set_target_speed(targetspeed);
-			// HzS - 	}
-			// HzS - 	else
-			// HzS - 	{
-			// HzS - 		trajec_set_target_speed(0);
-			// HzS - 	}
-			// HzS - }
-
-			// HzS -  motor_set_speed(trajec_get_speed());
-
 			break;
 		}
 	}
