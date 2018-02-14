@@ -23,6 +23,9 @@
 
 		  Entry and exit actions are associated with states, not transitions. Regardless of haow a state si entered or exited.
 		  All its entry and exit actions will be executed.
+
+		  statemachine_subscribe_do(sm);
+		  statemachine_unsubscribe_do(sm);
 */ 
  
 #include <stdlib.h>
