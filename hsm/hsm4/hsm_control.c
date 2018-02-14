@@ -226,6 +226,7 @@ static const struct state *idle_impl(struct statemachine *sm, const struct event
         }
 
         case EV_DO: {
+            printf("%s() -%s%s%s\n", __func__, EVENTCOL, ENUM2STRING(ev->id), NORM);
 
             if (flag2 != 0)
             {

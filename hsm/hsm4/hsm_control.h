@@ -9,7 +9,9 @@
 #define ENUM2STRING(_str) _str == EV_INIT ? "EV_INIT" : \
                           _str == EV_ENTRY ? "EV_ENTRY" : \
                           _str == EV_EXIT ? "EV_EXIT" : \
-                          _str == EV_DO ? "EV_DO" : "UNKNOWN"
+                          _str == EV_DO ? "EV_DO" : \
+                          _str == EV_CTRL_ENABLED ? "EV_CTRL_ENABLED" : \
+                          _str == CTRL_SOURCE_LOCAL ? "CTRL_SOURCE_LOCAL" : "UNKNOWN"
 
 #define FSM_BLOCK "      +-----------------------------------------------------------+\n \
      | main                                                      | \n \
