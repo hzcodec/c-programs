@@ -46,7 +46,6 @@
 #define BRED "\x1B[1m \x1B[31m" // bold + red color
 
 #define EVENTCOL  BYEL  // color of events
-#define MYCOL2    BCOL2 // 
 
 #define DELIMITER "-----------------------------------"
 
