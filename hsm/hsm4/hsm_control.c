@@ -103,6 +103,8 @@ static const struct state *main_fsm_impl(struct statemachine *sm, const struct e
 static const struct state *disabled_impl(struct statemachine *sm, const struct event *ev)
 {
     log_printf(__FILE__, __func__, ev);
+    struct main_fsm *m = container_of(sm, struct main_fsm, sm);
+    m->a = 99;
 
     switch (ev->id)
     {
@@ -173,7 +175,8 @@ static const struct state *enabled_impl(struct statemachine *sm, const struct ev
 
 static const struct state *running_impl(struct statemachine *sm, const struct event *ev)
 {
-    struct main_fsm *c = container_of(sm, struct main_fsm, sm);
+    struct main_fsm *m = container_of(sm, struct main_fsm, sm);
+    m->a = 99;
 
     log_printf(__FILE__, __func__, ev);
     printf("%s() - var1=%d, var2=%d\n", __func__, var1, var2);
@@ -258,6 +261,10 @@ static struct hsm_list *hsms;
 // =====================================================================================================================================
 int main(int argc, char* argv[])
 {
+
+    printf("argc=%c\n", argc);
+    printf("argv=%s\n", argv[0]);
+
     // build up HSM
     hsms = hsm_list_init(&hsms_storage);
     hsm_add(hsms, hsm_control_init());
