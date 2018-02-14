@@ -1,2 +1,4 @@
 hsm2/*.o
 hsm2/fsm
+hsm4/*.o
+hsm4/fsm
