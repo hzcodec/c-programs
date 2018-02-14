@@ -266,7 +266,7 @@ int main(int argc, char* argv[])
 
     // dummy prints to get rid of warnings
     printf("argc=%c\n", argc);
-    printf("argv=%s\n", argv[0]);
+    printf("argv=%s\n\n", argv[0]);
 
     printf("%s\n\n\n", FSM_BLOCK);
 
@@ -284,9 +284,9 @@ int main(int argc, char* argv[])
 
 void trig_current_fsm(int id)
 {
-    for (int i=0; i<6; i++)
+    for (int index=0; index<6; index++)
     {
-	printf("%s [%d.%d] %s\n", DELIMITER, id, i, DELIMITER);
+	printf("%s [%d.%d] %s\n", DELIMITER, id, index, DELIMITER);
         hsm_process_queue(hsms);
     }
     printf("\n\n");
