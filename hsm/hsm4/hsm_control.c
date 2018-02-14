@@ -45,8 +45,6 @@ void log_printf(char* file, const char* func, const struct event* e);
 struct main_fsm {
 	struct statemachine sm;
 	int a;
-//	enum ctrl_source new_control_source;
-//	enum ctrl_source control_source;
 };
 
 
