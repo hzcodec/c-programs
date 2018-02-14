@@ -264,6 +264,8 @@ int main(int argc, char* argv[])
     printf("argc=%c\n", argc);
     printf("argv=%s\n", argv[0]);
 
+    printf("%s\n\n\n", FSM_BLOCK);
+
     // build up HSM
     hsms = hsm_list_init(&hsms_storage);
     hsm_add(hsms, hsm_control_init());
