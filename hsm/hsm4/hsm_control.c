@@ -262,6 +262,7 @@ static struct hsm_list *hsms;
 int main(int argc, char* argv[])
 {
 
+    // dummy prints to get rid of warnings
     printf("argc=%c\n", argc);
     printf("argv=%s\n", argv[0]);
 
@@ -290,11 +291,11 @@ void trig_current_fsm(int id)
 
 void log_printf(char* file, const char* func, const struct event* e)
 {
-//    printf("[%s]: %s%s()%s -%s%s%s -  flag1=%d\n", 
-//                                 file, 
-//				 BCYAN, func, NORM,
-//				 EVENTCOL, ENUM2STRING(e->id), NORM, 
-//				 flag1
-//				 );
+    printf("[%s]: %s%s()%s -%s%s%s -  flag1=%d\n", 
+                                 file, 
+				 BCYAN, func, NORM,
+				 EVENTCOL, ENUM2STRING(e->id), NORM, 
+				 flag1
+				 );
 }
 
