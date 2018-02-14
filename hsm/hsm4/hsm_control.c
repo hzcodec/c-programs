@@ -17,6 +17,12 @@
 		  |    |           |       |  +----------+  +----------+   |  |
 		  |    +-----------+       +-------------------------------+  |
 		  +-----------------------------------------------------------+
+
+		  Every state in a UML statechart can have optional entry actions, which are executed upon entry to a state,
+		  as well as optional exit actions, which are executed upon exit from a state.
+
+		  Entry and exit actions are associated with states, not transitions. Regardless of haow a state si entered or exited.
+		  All its entry and exit actions will be executed.
 */ 
  
 #include <stdlib.h>
@@ -26,7 +32,6 @@
 #include "hsm_main.h"
 #include "hsm_control.h"
 #include "types.h"
-#include "timer.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -39,6 +44,7 @@ void log_printf(char* file, const char* func, const struct event* e);
 
 struct main_fsm {
 	struct statemachine sm;
+	int a;
 //	enum ctrl_source new_control_source;
 //	enum ctrl_source control_source;
 };
@@ -67,6 +73,8 @@ bool flag_active(void)
 static const struct state *main_fsm_impl(struct statemachine *sm, const struct event *ev)
 {
     log_printf(__FILE__, __func__, ev);
+    struct main_fsm *m = container_of(sm, struct main_fsm, sm);
+    m->a = 99;
 
     switch (ev->id)
     {
