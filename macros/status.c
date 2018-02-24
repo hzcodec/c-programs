@@ -46,6 +46,7 @@ int main()
   uint8_t test;
 
   test = CONFIGURATION_STATUS | ESTIMATED_TEMPERATUR | OVERCURRENT_FLAG;
+  printf("test=%02x\n", test);
 
   // find which bit that is set
   for (int i=0; i<8; i++)
