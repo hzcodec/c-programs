@@ -178,6 +178,7 @@ static const struct state *running_impl(struct statemachine *sm, const struct ev
     switch (ev->id)
     {
 	case EV_ENTRY: {
+            printf("%s(1) -%s%s%s\n", __func__, EVENTCOL4, ENUM2STRING(ev->id), NORM);
             //statemachine_subscribe_do(sm);
             return statemachine_event_handled();
 	    break;
@@ -226,12 +227,13 @@ static const struct state *idle_impl(struct statemachine *sm, const struct event
 
             if (flag2 != 0)
             {
+               printf("%s(3) -%s%s%s\n", __func__, EVENTCOL5, ENUM2STRING(ev->id), NORM);
 	       return &running; 
             }
 
 	    else if (flag2 == 0)
 	    {
-               printf("%s(3) -%s%s%s\n", __func__, EVENTCOL5, ENUM2STRING(ev->id), NORM);
+               printf("%s(4) -%s%s%s\n", __func__, EVENTCOL5, ENUM2STRING(ev->id), NORM);
 	       var1 = 99;
 	       flag1 = 0;
 	       return &disabled; 
