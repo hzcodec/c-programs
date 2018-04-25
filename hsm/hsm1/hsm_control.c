@@ -24,6 +24,8 @@
 		  Entry and exit actions are associated with states, not transitions. Regardless of how a state is entered or exited, 
 		  all its entry and exit actions will be executed.
 
+		  To control the FSM play with flag1, flag2 and error.
+
 
                   What is the purpose of:
                     statemachine_subscribe_do(sm);
@@ -68,6 +70,8 @@ static int flag1 = 1;
 static int flag2 = 0;
 static int var1;
 static int var2;
+
+int error = 0;
 
 
 bool flag_active(void)
@@ -190,6 +194,12 @@ static const struct state *running_impl(struct statemachine *sm, const struct ev
         }
 
         case EV_DO: {
+	    if (error == 1)
+	    {
+                printf("%s(2) -%s%s%s, flag2=%d, error=%d\n", __func__, EVENTCOL4, ENUM2STRING(ev->id), NORM, flag2, error);
+                return &enabled;
+	    }
+
 	    if (flag2 == 0)
 	    {
                 printf("%s(2) -%s%s%s, flag2=%d, var1=%d, var2=%d\n", __func__, EVENTCOL4, ENUM2STRING(ev->id), NORM, flag2, var1, var2);
