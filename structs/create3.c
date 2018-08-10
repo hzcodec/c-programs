@@ -10,12 +10,12 @@
 #include <stdlib.h>
 
 void f1(void);
-void f2(void);
+void f2(int var);
 
 struct B {
 	int b1;
 	int b2;
-	void (*fp)(void);
+	void (*fp)(int var);
 };
 static struct B *res;
 
@@ -32,9 +32,9 @@ void f1(void)
 	printf("%s() -\n", __func__);
 }
 
-void f2(void)
+void f2(int var)
 {
-	printf("%s() -\n", __func__);
+	printf("%s() - var=%d\n", __func__, var);
 }
 
 struct A *a_create(void)
@@ -72,7 +72,7 @@ void a_do(struct A *a)
 
 	// call f1() and f2() via function pointer
 	a->fp();
-	a->pb->fp();
+	a->pb->fp(1000);
 }
 
 
