@@ -3,15 +3,19 @@
     Date         : fre 10 aug 2018 15:23:39 CEST
     File         : create3.c
     Reference    : -
-    Description  : -
+    Description  : Test of create function for objects.
 */ 
  
 #include <stdio.h>
 #include <stdlib.h>
 
+void f1(void);
+void f2(void);
+
 struct B {
 	int b1;
 	int b2;
+	void (*fp)(void);
 };
 static struct B *res;
 
@@ -19,9 +23,19 @@ static struct B *res;
 struct A {
 	int a1;
 	struct B *pb;
+	void (*fp)(void);
 }; 
 static struct A *pa;
 
+void f1(void)
+{
+	printf("%s() -\n", __func__);
+}
+
+void f2(void)
+{
+	printf("%s() -\n", __func__);
+}
 
 struct A *a_create(void)
 {
@@ -40,6 +54,12 @@ struct A *a_create(void)
 	printf("%s() - fa->pb=%p\n", __func__, fa->pb);
 	printf("%s() - fa->pb->b1=%d\n\n", __func__, fa->pb->b1);
 
+	// setup function pointer to f1()
+	fa->fp = f1;
+
+	// setup function pointer to f2()
+	fa->pb->fp = f2;
+
 	return fa;
 }
 
@@ -49,6 +69,10 @@ void a_do(struct A *a)
 	a->a1 = 99;
 	a->pb->b1 = 12;
 	a->pb->b2 = 44;
+
+	// call f1() and f2() via function pointer
+	a->fp();
+	a->pb->fp();
 }
 
 
