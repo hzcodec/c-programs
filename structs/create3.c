@@ -11,7 +11,7 @@
 
 // prototypes
 void f1(void);
-void f2(int var);
+int f2(int var);
 void f3(void);
 
 
@@ -19,7 +19,7 @@ void f3(void);
 struct B {
 	int b1;
 	int b2;
-	void (*fp)(int var);
+	int (*fp)(int var);
 };
 static struct B *res;
 
@@ -40,9 +40,10 @@ void f1(void)
 }
 
 // internal function
-void f2(int var)
+int f2(int var)
 {
 	printf("%s() - var=%d\n", __func__, var);
+	return 99;
 }
 
 // internal function
@@ -88,7 +89,8 @@ void a_do(struct A *a)
 
 	// call f1() and f2() via function pointer
 	a->fp();
-	a->pb->fp(1000);
+	int rv = a->pb->fp(1000);
+	printf("%s() - rv=%d\n", __func__, rv);
 
 	a->fp = f3;
 	a->fp();
@@ -112,18 +114,20 @@ int main(int argc, char *argv[])
 
 /*
     Result:
-      a_create() - fa=0x818010, size=24
-      a_create() - fb=0x818030, size=16
-      a_create() - fa->pb=0x818030
+      a_create() - fa=0x213a010, size=24
+      a_create() - fb=0x213a030, size=16
+      a_create() - fa->pb=0x213a030
       a_create() - fa->pb->b1=0
       
       a_do() -
       f1() -
       f2() - var=1000
+      a_do() - rv=99
       f3() -
       ----------------------------
       main() - pa->a1=99
       main() - pa->pb->b1=12
       main() - pa->pb->b2=44
       ----------------------------
+
 */
