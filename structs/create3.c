@@ -12,6 +12,7 @@
 // prototypes
 void f1(void);
 void f2(int var);
+void f3(void);
 
 
 // fb pointer
@@ -42,6 +43,12 @@ void f1(void)
 void f2(int var)
 {
 	printf("%s() - var=%d\n", __func__, var);
+}
+
+// internal function
+void f3(void)
+{
+	printf("%s() -\n", __func__);
 }
 
 
@@ -82,6 +89,9 @@ void a_do(struct A *a)
 	// call f1() and f2() via function pointer
 	a->fp();
 	a->pb->fp(1000);
+
+	a->fp = f3;
+	a->fp();
 }
 
 
