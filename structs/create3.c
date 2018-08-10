@@ -112,19 +112,18 @@ int main(int argc, char *argv[])
 
 /*
     Result:
-
-      a_create() - fa=0xdb4010, size=24
-      a_create() - fb=0xdb4030, size=16
-      a_create() - fa->pb=0xdb4030
+      a_create() - fa=0x818010, size=24
+      a_create() - fb=0x818030, size=16
+      a_create() - fa->pb=0x818030
       a_create() - fa->pb->b1=0
       
       a_do() -
       f1() -
       f2() - var=1000
+      f3() -
       ----------------------------
       main() - pa->a1=99
       main() - pa->pb->b1=12
       main() - pa->pb->b2=44
       ----------------------------
-
 */
