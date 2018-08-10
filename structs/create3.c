@@ -9,9 +9,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// prototypes
 void f1(void);
 void f2(int var);
 
+
+// fb pointer
 struct B {
 	int b1;
 	int b2;
@@ -20,6 +23,7 @@ struct B {
 static struct B *res;
 
 
+// fa pointer
 struct A {
 	int a1;
 	struct B *pb;
@@ -27,15 +31,19 @@ struct A {
 }; 
 static struct A *pa;
 
+
+// internal function
 void f1(void)
 {
 	printf("%s() -\n", __func__);
 }
 
+// internal function
 void f2(int var)
 {
 	printf("%s() - var=%d\n", __func__, var);
 }
+
 
 struct A *a_create(void)
 {
@@ -63,6 +71,7 @@ struct A *a_create(void)
 	return fa;
 }
 
+// just do something with the object
 void a_do(struct A *a)
 {
 	printf("%s() -\n", __func__);
@@ -76,14 +85,17 @@ void a_do(struct A *a)
 }
 
 
+// user ...
 int main(int argc, char *argv[])
 {
         pa = a_create();
 	a_do(pa);
 
+	printf("----------------------------\n");
 	printf("%s() - pa->a1=%d\n", __func__, pa->a1);
 	printf("%s() - pa->pb->b1=%d\n", __func__, pa->pb->b1);
 	printf("%s() - pa->pb->b2=%d\n", __func__, pa->pb->b2);
+	printf("----------------------------\n");
 
         return 0;
 }
@@ -91,13 +103,18 @@ int main(int argc, char *argv[])
 /*
     Result:
 
-      a_create() - fa=0x1fc8010, size=16
-      a_create() - fb=0x1fc8030, size=8
+      a_create() - fa=0xdb4010, size=24
+      a_create() - fb=0xdb4030, size=16
+      a_create() - fa->pb=0xdb4030
       a_create() - fa->pb->b1=0
       
       a_do() -
+      f1() -
+      f2() - var=1000
+      ----------------------------
       main() - pa->a1=99
       main() - pa->pb->b1=12
       main() - pa->pb->b2=44
+      ----------------------------
 
 */
