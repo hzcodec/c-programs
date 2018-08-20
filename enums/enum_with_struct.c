@@ -80,6 +80,8 @@ void fsm(void)
  
 int main(int argc, char *argv[])
 {
+	printf("%s() - ti.status=%s, ti.state=%s\n\n", __func__, ENUM2STRING(ti.status), ENUM2STRING(ti.state));
+
 	for (int i=0; i<7; i++)
 	{
 		fsm();
