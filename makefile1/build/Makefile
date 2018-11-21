@@ -38,6 +38,7 @@ install: main
 	mkdir -p ../release/bin
 	mv $< ../release/bin/main
 
+.PHONY: clean
 clean:
 	rm -f main $(OBJECTS) ../release/bin/main
 
