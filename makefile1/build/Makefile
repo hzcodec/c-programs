@@ -6,12 +6,16 @@ LDFLAGS =
 SRC_DIR = ../src
 OBJ_DIR = ../obj
 
-SOURCES = $(SRC_DIR)/main.c $(SRC_DIR)/file1.c $(SRC_DIR)/file2.c
+include ../src/main.mk
+SOURCES = $(SRC_DIR)/main.c \
+          $(SRC_DIR)/file1.c \
+	  $(SRC_DIR)/file2.c
 
 OBJECTS = $(SOURCES:.c=.o)
 $(info OBJECTS="$(OBJECTS)")
 $(info -------------------------------------------------------------)
 #$(info SOURCES="$(SOURCES)")
+
 
 EXECUTABLE=main
 
