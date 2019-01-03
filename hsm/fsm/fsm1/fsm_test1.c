@@ -8,36 +8,33 @@
  
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <inttypes.h>
-#include <stdbool.h>
 #include "fsm.h"
 
 typedef enum {
-	BIST_Init,
-	BIST_START,
-	BIST_Successful,
-	BIST_Fail
-}BIST_State_t;
+	FSM_Init,
+	FSM_START,
+	FSM_Successful,
+	FSM_Fail
+}FSM_State_t;
  
  
-FSM(BIST_FSM, BIST_State_t, BIST_Init)
-STATE(BIST_Init)
-	printf("Bist_Init\n");
-	NEXT_STATE(BIST_Successful);
+FSM(FSM_FSM, FSM_State_t, FSM_Init)
+STATE(FSM_Init)
+	printf("FSM_Init\n");
+	NEXT_STATE(FSM_Successful);
 END_STATE;
 
-STATE(BIST_Successful)
-	printf("BIST_Successful\n");
-	NEXT_STATE(BIST_Fail);
+STATE(FSM_Successful)
+	printf("FSM_Successful\n");
+	NEXT_STATE(FSM_Fail);
 END_STATE;
 
-STATE(BIST_Fail)
-	printf("BIST_Fail\n");
-	NEXT_STATE(BIST_Init);
+STATE(FSM_Fail)
+	printf("FSM_Fail\n");
+	NEXT_STATE(FSM_Init);
 END_STATE;
 
-END_FSM(BIST_FSM);
+END_FSM(FSM_FSM);
 
 
 int main(int argc, char *argv[])
@@ -45,7 +42,7 @@ int main(int argc, char *argv[])
 	int looping = 0;
 
 	while(looping < 5) {
-		BIST_State_t bist_status = BIST_FSM();
+		FSM_State_t fsm_status = FSM_FSM();
 		looping++;
 	}
  
