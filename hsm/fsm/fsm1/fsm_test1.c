@@ -17,7 +17,7 @@ typedef enum {
 }FSM_State_t;
  
  
-FSM(FSM_FSM, FSM_State_t, FSM_Init)
+FSM(my_FSM, FSM_State_t, FSM_Init)
 
 STATE(FSM_Init)
 	printf("FSM_Init\n");
@@ -41,7 +41,7 @@ STATE(FSM_Fail)
 	NEXT_STATE(FSM_Init);
 END_STATE;
 
-END_FSM(FSM_FSM);
+END_FSM(my_FSM);
 
 
 int main(int argc, char *argv[])
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 	int looping = 0;
 
 	while(looping < 5) {
-		FSM_State_t fsm_status = FSM_FSM();
+		FSM_State_t fsm_status = my_FSM();
 		looping++;
 	}
  
