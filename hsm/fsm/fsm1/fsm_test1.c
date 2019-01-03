@@ -12,7 +12,6 @@
 
 typedef enum {
 	FSM_Init,
-	FSM_START,
 	FSM_Successful,
 	FSM_Fail
 }FSM_State_t;
