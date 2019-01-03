@@ -19,6 +19,7 @@ typedef enum {
  
  
 FSM(FSM_FSM, FSM_State_t, FSM_Init)
+
 STATE(FSM_Init)
 	printf("FSM_Init\n");
 	NEXT_STATE(FSM_Successful);

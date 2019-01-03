@@ -1,10 +1,6 @@
 #ifndef FSM_H_
 #define FSM_H_
 
-// Stringify macros
-#define XSTR(s) STR(s)
-#define STR(s) #s
-
 #define FSM(_name_, _type_, _init_) \
 	static _type_ _name_##_state = (_init_); \
 	_type_ _name_(void) { \
