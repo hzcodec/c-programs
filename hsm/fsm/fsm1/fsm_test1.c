@@ -26,9 +26,9 @@ STATE(FSM_Init)
 END_STATE;
 
 STATE(FSM_Successful)
-ON_ENTRY{
-	printf("  Entry for FSM_Successful\n");
-}
+	ON_ENTRY{
+		printf("  Entry for FSM_Successful\n");
+	}
 
 	for (int i=0; i<3; i++) {
 		printf("FSM_Successful [%d]\n", i);
