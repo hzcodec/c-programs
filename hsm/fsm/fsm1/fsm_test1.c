@@ -19,27 +19,27 @@ typedef enum {
  
 FSM(my_FSM, FSM_State_t, FSM_Init)
 
-STATE(FSM_Init)
-	printf("FSM_Init\n");
-	NEXT_STATE(FSM_Successful);
-END_STATE;
-
-STATE(FSM_Successful)
-	ON_ENTRY{
-		printf("  Entry for FSM_Successful\n");
-	}
-
-	for (int i=0; i<3; i++) {
-		printf("FSM_Successful [%d]\n", i);
-	}
-
-	NEXT_STATE(FSM_Fail);
-END_STATE;
-
-STATE(FSM_Fail)
-	printf("FSM_Fail\n");
-	NEXT_STATE(FSM_Init);
-END_STATE;
+	STATE(FSM_Init)
+		printf("FSM_Init\n");
+		NEXT_STATE(FSM_Successful);
+	END_STATE;
+	
+	STATE(FSM_Successful)
+		ON_ENTRY{
+			printf("  Entry for FSM_Successful\n");
+		}
+	
+		for (int i=0; i<3; i++) {
+			printf("FSM_Successful [%d]\n", i);
+		}
+	
+		NEXT_STATE(FSM_Fail);
+	END_STATE;
+	
+	STATE(FSM_Fail)
+		printf("FSM_Fail\n");
+		NEXT_STATE(FSM_Init);
+	END_STATE;
 
 END_FSM(my_FSM);
 
