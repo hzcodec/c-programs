@@ -3,7 +3,7 @@
     Date         : 2019-01-07
     File         : fsm_test2.c
     Reference    : -
-    Description  : -
+    Description  : Rullade upp defines.
 */ 
  
 #include <stdio.h>
@@ -34,13 +34,6 @@ typedef enum {
 	FSM_Fail
 }FSM_State_t;
  
-//FSM(my_FSM, FSM_State_t, FSM_Init)
-//STATE(FSM_Init)
-//	printf("FSM_Init\n");
-//	NEXT_STATE(FSM_Successful);
-//END_STATE;
-//END_FSM(my_FSM);
-
 static FSM_State_t my_FSM_state = FSM_Init;
 
 FSM_State_t my_FSM(void) {
@@ -50,25 +43,31 @@ FSM_State_t my_FSM(void) {
 	FSM_State_t _state = my_FSM_state;
 	
 	switch(_state) {
-	case FSM_Init: { printf("FSM_Init 2\n");
+	case FSM_Init: { printf("FSM_Init A\n");
 	                 _next_state = FSM_Successful; 
 			} break;
 	
+	case FSM_Successful: { printf("FSM_Init B\n");
+	                 _next_state = FSM_Init; 
+			} break;
+	
+	}
+
 	_prev_state = _state;
 	_state = _next_state;
 	my_FSM_state = _state;
+	printf("_prev_state=%d, _next_state=%d, _state=%d\n", _prev_state, _next_state, _state);
+
 	return _state;
-	}
 }
 
 int main(int argc, char *argv[])
 {
+	FSM_State_t fsm_status;
 
-	my_FSM();
-
-	//for (int i=0; i<3; i++) {
-	//	FSM_State_t fsm_status = my_FSM();
-	//}
+	for (int i=0; i<3; i++) {
+		fsm_status = my_FSM();
+	}
 
         return 0;
 }
