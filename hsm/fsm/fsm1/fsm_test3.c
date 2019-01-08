@@ -3,7 +3,7 @@
     Date         : 2019-01-08
     File         : fsm_test3.c
     Reference    : -
-    Description  : -
+    Description  : Test of 2 FSMs.
 */ 
  
 #include <stdio.h>
@@ -63,6 +63,7 @@ FSM(my_Second_FSM, FSM2_State_t, State_D)
 	END_STATE;
 	
 END_FSM(my_Second_FSM);
+
 
 int main(int argc, char *argv[])
 {
