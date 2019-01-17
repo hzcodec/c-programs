@@ -25,11 +25,13 @@ static struct vendor_name usb_vendor[] = {
 const char* get_vendor_name(unsigned short vid)
 {
 	for(int i=0; i<sizeof(usb_vendor)/sizeof(usb_vendor[0]); i++) {
+		printf("usb_vendor[%d] = %s\n", i, usb_vendor[i].name);
 
 		if (usb_vendor[i].vid == vid) {
 			return usb_vendor[i].name;
 		}
 	}
+	printf("\n");
 
 	return NULL;
 }
