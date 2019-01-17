@@ -44,18 +44,23 @@ int main(int argc, char *argv[])
 
 	pvn->name = get_vendor_name(0);
 	printf("name: %s\n", pvn->name);
+	printf("-----------------------\n");
 
 	pvn->name = get_vendor_name(1);
 	printf("name: %s\n", pvn->name);
+	printf("-----------------------\n");
 
 	pvn->name = get_vendor_name(2);
 	printf("name: %s\n", pvn->name);
+	printf("-----------------------\n");
 
 	pvn->name = get_vendor_name(3);
 	printf("name: %s\n", pvn->name);
+	printf("-----------------------\n");
 
 	pvn->name = get_vendor_name(4);
 	printf("name: %s\n", pvn->name);
+	printf("-----------------------\n");
 
         return 0;
 }
