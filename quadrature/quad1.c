@@ -9,9 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <inttypes.h>
-#include <stdbool.h>
- 
  
 typedef enum
 {
@@ -22,7 +19,7 @@ typedef enum
 
 #define ENUM2STRING(_str) _str == POS ? "Postive dir" : \
                           _str == NEG ? "Negative dir" : \
-                          _str == IDLE ? "IDLE" : "UNKNOWN"
+                          _str == IDLE ? "Idle" : "UNKNOWN"
 
 int main(int argc, char *argv[])
 {
@@ -35,12 +32,12 @@ int main(int argc, char *argv[])
 	int inputB = 0;
 
 	// negative direction
-	int a[8] = {0, 0, 1, 1, 0, 0, 1, 1};
-	int b[8] = {0, 1, 1, 0, 0, 1, 1, 0};
+	//int a[8] = {0, 0, 1, 1, 0, 0, 1, 1};
+	//int b[8] = {0, 1, 1, 0, 0, 1, 1, 0};
 
 	// positive direction
-	//int a[8] = {0, 1, 1, 0, 0, 1, 1, 0};
-	//int b[8] = {0, 0, 1, 1, 0, 0, 1, 1};
+	int a[8] = {0, 1, 1, 0, 0, 1, 1, 0};
+	int b[8] = {0, 0, 1, 1, 0, 0, 1, 1};
 
 	// no direction
 	//int a[8] = {0, 0, 0, 0, 0, 0, 0, 0};
