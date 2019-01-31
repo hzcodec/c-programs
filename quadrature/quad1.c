@@ -4,6 +4,22 @@
     File         : quad1.c
     Reference    : -
     Description  : https://cdn.sparkfun.com/datasheets/Robotics/How%20to%20use%20a%20quadrature%20encoder.pdf
+
+                   The binary values above convert to 0,1,3,2 or 0,2,3,1 depending on the direction.
+		   This pattern repeats continuously.
+
+		   By using the current value from the encoder to index one dimension of the array and the
+                   previous value to index the other dimension you can quickly get a -1, 0, or +1 output.
+
+		   As you can see, if the value has not changed then the output is 0.
+		   The sequence of 0, 1, 3, 2 gives an output of -1.
+                   The sequence of 0, 2, 3, 1 gives an output of +1.
+
+                   2 represents a disallowed state and would most likely occur if the encoder outputs are changing too
+                   quickly for your code to keep up. Normally this should not happen.
+
+		   When I get an output of 2 I know that I got an error, perhaps due to electrical noise or my code being too slow.
+		   If you replace 2 with 0 then the disallowed state will be ignored.
 */ 
  
 #include <stdio.h>
