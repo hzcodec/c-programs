@@ -31,11 +31,13 @@ typedef enum
   POS,  // 0
   NEG,  // 1
   IDLE,  // 2
+  ERR,  // 2
 } Directions;
 
 #define ENUM2STRING(_str) _str == POS ? "Postive dir" : \
                           _str == NEG ? "Negative dir" : \
-                          _str == IDLE ? "Idle" : "UNKNOWN"
+                          _str == IDLE ? "Idle" : \
+                          _str == ERR ? "Error" : "UNKNOWN"
 
 int main(int argc, char *argv[])
 {
@@ -52,12 +54,16 @@ int main(int argc, char *argv[])
 	//int b[8] = {0, 1, 1, 0, 0, 1, 1, 0};
 
 	// positive direction
-	int a[8] = {0, 1, 1, 0, 0, 1, 1, 0};
-	int b[8] = {0, 0, 1, 1, 0, 0, 1, 1};
+	//int a[8] = {0, 1, 1, 0, 0, 1, 1, 0};
+	//int b[8] = {0, 0, 1, 1, 0, 0, 1, 1};
 
 	// no direction
 	//int a[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 	//int b[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+	// error
+	int a[8] = {1, 1, 1, 1, 0, 0, 0, 0};
+	int b[8] = {0, 0, 0, 1, 0, 0, 0, 0};
 
 	for (int i=0; i<8; i++) {
 		inputA = a[i];
@@ -74,6 +80,7 @@ int main(int argc, char *argv[])
 			case 0:    printf("%s\n", ENUM2STRING(IDLE)); break;
 			case 1:    printf("%s\n", ENUM2STRING(POS)); break;
 			case -1:   printf("%s\n", ENUM2STRING(NEG)); break;
+			case 2:   printf("%s\n", ENUM2STRING(ERR)); break;
 			default: printf("---\n");
 		}
 	}
