@@ -18,19 +18,7 @@
                   	  _str == DIN_DB_LOGIC_4 ? "DIN_DB_LOGIC_4" : \
                   	  _str == DIN_DB_LOGIC_5 ? "DIN_DB_LOGIC_5" : \
                   	  _str == DIN_DB_LOGIC_6 ? "DIN_DB_LOGIC_6" : \
-                  	  _str == DIN_DB_LOGIC_7 ? "DIN_DB_LOGIC_7" : \
-                  	  _str == DIN_DB_LOGIC_8 ? "DIN_DB_LOGIC_8" : \
-                  	  _str == DIN_DB_LOGIC_9 ? "DIN_DB_LOGIC_9" : \
-                  	  _str == DIN_DB_LOGIC_10 ?"DIN_DB_LOGIC_10" : \
-                  	  _str == DIN_DB_LOGIC_11 ?"DIN_DB_LOGIC_11" : \
-                  	  _str == DIN_MAN_DEC ? "DIN_MAN_DEC" : \
-                  	  _str == DIN_MAN_INC ? "DIN_MAN_INC" : \
-                  	  _str == DIN_AVR_MISO ? "DIN_AVR_MISO" : \
-                  	  _str == DIN_USB_DETECT ? "DIN_USB_DETECT" : \
-                  	  _str == DIN_ISO_LGC_DEC ? "DIN_ISO_LGC_DEC" : \
-                  	  _str == DIN_ISO_LGC_INC ? "DIN_ISO_LGC_INC" : \
-                  	  _str == DIN_ISO_LGC_LIMIT1 ? "DIN_ISO_LGC_LIMIT1" : \
-                  	  _str == DIN_ISO_LGC_LIMIT2 ? "DIN_ISO_LGC_LIMIT2" : "UNKNOWN"
+                  	  _str == DIN_DB_LOGIC_7 ? "DIN_DB_LOGIC_7" : "UNKNOWN"
 
 typedef enum {
 	DIN_DB_LOGIC_2,
@@ -39,18 +27,6 @@ typedef enum {
 	DIN_DB_LOGIC_5,
 	DIN_DB_LOGIC_6,
 	DIN_DB_LOGIC_7,
-	DIN_DB_LOGIC_8,
-	DIN_DB_LOGIC_9,
-	DIN_DB_LOGIC_10,
-	DIN_DB_LOGIC_11,
-	DIN_MAN_DEC,
-	DIN_MAN_INC,
-	DIN_AVR_MISO, //Bitbanging?
-	DIN_USB_DETECT,
-	DIN_ISO_LGC_DEC,
-	DIN_ISO_LGC_INC,
-	DIN_ISO_LGC_LIMIT1,
-	DIN_ISO_LGC_LIMIT2,
 	IO_DIN_NUM ///< Number of digital inputs, not a valid value
 } IO_DIN_t;
 
@@ -72,7 +48,7 @@ static struct din {
 
 void dio_set_filter_length(unsigned pin, unsigned length)
 {
-	printf("    %s() - length=%d\n", __func__, length);
+	//printf("    %s() - length=%d\n", __func__, length);
 
 	assert(pin < din.num);
 	din.pin[pin].filter_len = length;
@@ -88,62 +64,26 @@ bool DIO_GetRawInput(unsigned input) {
 		break;
 	case DIN_DB_LOGIC_2:
 		//value = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_8);
-		value = 2;
+		value = 1;
 		break;
 	case DIN_DB_LOGIC_3:
 		//value = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_9);
 		break;
 	case DIN_DB_LOGIC_4:
 		//value = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12);
+		value = 1;
 		break;
 	case DIN_DB_LOGIC_5:
 		//value = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13);
 		break;
-	case DIN_AVR_MISO:
-		//value = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_14);
-		break;
 	case DIN_DB_LOGIC_7:
 		//value = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15);
 		break;
-	case DIN_DB_LOGIC_8:
-		//value = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11);
-		break;
-	case DIN_DB_LOGIC_9:
-		//value = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_10);
-		break;
-	case DIN_DB_LOGIC_10:
-		//value = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_1);
-		break;
-	case DIN_DB_LOGIC_11:
-		//value = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_0);
-		break;
-	case DIN_MAN_DEC:
-		//value = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_14);
-		break;
-	case DIN_MAN_INC:
-		//value = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_15);
-		break;
-	case DIN_USB_DETECT:
-		//value = GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_11);
-		break;
-	case DIN_ISO_LGC_DEC:
-		//value = get_iso_lgc_dec();
-		break;
-	case DIN_ISO_LGC_INC:
-		//value = get_iso_lgc_inc();
-		break;
-	case DIN_ISO_LGC_LIMIT1:
-		//value = get_iso_lgc_limit1();
-		break;
-	case DIN_ISO_LGC_LIMIT2:
-		//value = get_iso_lgc_limit2();
-		break;
-
 	default:
 		break;
 	}
 
-	printf("%s() - value=%d, Port=%s\n", __func__, value, ENUM2STRING(input));
+	printf("%s() - Port=%s, value=%d\n", __func__, ENUM2STRING(input), value);
 	return value;
 }
 
@@ -223,11 +163,21 @@ int main(int argc, char *argv[])
 
 	dio_update_filters();
 
-	//int rv = dio_get_raw_input(DIN_DB_LOGIC_2);
-	//printf("%s() - rv=%d\n", __func__, rv);
+	int port = DIN_DB_LOGIC_4;
+	int rv = dio_get_raw_input(port);
+	printf("%s() - Port=%s, rv=%d\n", __func__, ENUM2STRING(port), rv);
 
-	int rv = dio_get_input(DIN_DB_LOGIC_2); 
-	printf("%s() - rv=%d\n", __func__, rv);
+	//int port = DIN_DB_LOGIC_2;
+	//int rv = dio_get_input(port); 
+	//printf("%s() - Port=%s, rv=%d\n", __func__, ENUM2STRING(port), rv);
+
+	//port = DIN_DB_LOGIC_4;
+	//rv = dio_get_input(port); 
+	//printf("%s() - Port=%s, rv=%d\n", __func__, ENUM2STRING(port), rv);
+
+	//port = DIN_DB_LOGIC_5;
+	//rv = dio_get_input(port); 
+	//printf("%s() - Port=%s, rv=%d\n", __func__, ENUM2STRING(port), rv);
 
         return 0;
 }
