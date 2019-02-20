@@ -39,50 +39,64 @@ typedef enum
                           _str == IDLE ? "Idle" : \
                           _str == ERR ? "Error" : "UNKNOWN"
 
+static int QEM[16] = {0, -1, 1, 2, 1, 0, 2, -1, -1, 2, 0, 1, 2, 1, -1, 0};
+static int old_quad = 0;
+static int new_quad = 0;
+static int out_quad = 0;
+static int hall_sensor_1 = 0;
+static int hall_sensor_2 = 0;
+static int cnt = 0;
+static int var = 0;
+
+void f1(int i)
+{
+	//int a[8] = {0, 1, 1, 0, 0, 1, 1, 0};
+	//int b[8] = {0, 0, 1, 1, 0, 0, 1, 1};
+	int a[8] = {0, 1, 1, 0, 0, 0, 0, 0};
+	int b[8] = {0, 0, 1, 0, 0, 0, 0, 0};
+
+	hall_sensor_1 = a[i];
+	hall_sensor_2 = b[i];
+
+	old_quad = new_quad;
+	new_quad = hall_sensor_1*2 + hall_sensor_2;
+	//printf("[%d] - hall_sensor_1=%d, hall_sensor_2=%d, new_quad=%d\n", i, hall_sensor_1, hall_sensor_2, new_quad);
+	out_quad = QEM[old_quad*4 + new_quad];
+	//printf("out_quad=%d\n", out_quad);
+
+	switch(out_quad) 
+	{
+		//case 0:    printf("%s\n", ENUM2STRING(IDLE)); break;
+		case 0: break;
+		case 1:    printf("%s\n", ENUM2STRING(POS)); cnt++; break;
+		case -1:   printf("%s\n", ENUM2STRING(NEG)); cnt--; break;
+		case 2:   printf("%s\n", ENUM2STRING(ERR)); var = cnt; break;
+		default: printf("---\n");
+	}
+	 
+	var = cnt;
+
+	printf("cnt=%d, var=%d\n", cnt, var);
+}
+
+
 int main(int argc, char *argv[])
 {
- 
-	int QEM[16] = {0, -1, 1, 2, 1, 0, 2, -1, -1, 2, 0, 1, 2, 1, -1, 0};
-	int old = 0;
-	int new = 0;
-	int out = 0;
-	int inputA = 0;
-	int inputB = 0;
 
 	// negative direction
 	//int a[8] = {0, 0, 1, 1, 0, 0, 1, 1};
 	//int b[8] = {0, 1, 1, 0, 0, 1, 1, 0};
-
-	// positive direction
-	//int a[8] = {0, 1, 1, 0, 0, 1, 1, 0};
-	//int b[8] = {0, 0, 1, 1, 0, 0, 1, 1};
 
 	// no direction
 	//int a[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 	//int b[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 	// error
-	int a[8] = {1, 1, 1, 1, 0, 0, 0, 0};
-	int b[8] = {0, 0, 0, 1, 0, 0, 0, 0};
+	//int a[8] = {1, 1, 1, 1, 0, 0, 0, 0};
+	//int b[8] = {0, 0, 0, 1, 0, 0, 0, 0};
 
 	for (int i=0; i<8; i++) {
-		inputA = a[i];
-		inputB = b[i];
-
-		old = new;
-		new = inputA*2 + inputB;
-		//printf("[%d] - inputA=%d, inputB=%d, new=%d\n", i, inputA, inputB, new);
-		out = QEM[old*4 + new];
-		//printf("out=%d\n", out);
-
-		switch(out) 
-		{
-			case 0:    printf("%s\n", ENUM2STRING(IDLE)); break;
-			case 1:    printf("%s\n", ENUM2STRING(POS)); break;
-			case -1:   printf("%s\n", ENUM2STRING(NEG)); break;
-			case 2:   printf("%s\n", ENUM2STRING(ERR)); break;
-			default: printf("---\n");
-		}
+		f1(i);
 	}
 
         return 0;
