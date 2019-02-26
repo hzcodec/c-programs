@@ -17,9 +17,14 @@
 #define CGRN "\x1B[32m"
 #define CYEL "\x1B[33m"
 #define CBLU "\x1B[34m"
+
+#define POSDIR CGRN "Positive direction" CNRM
+#define NEGDIR CBLU "Negative direction" CNRM
+#define ERRDIR CRED "ERROR" CNRM
+#define IDLEDIR CYEL "IDLE" CNRM
  
 #define ASIZE 12
- 
+
 typedef enum
 {
   POS,  // 0
@@ -28,10 +33,10 @@ typedef enum
   IDLE,  // 2
 } Directions;
 
-#define ENUM2STRING(_str) _str == POS ? "Postive dir" : \
-                          _str == NEG ? "Negative dir" : \
-                          _str == ERR ? "ERR" : \
-                          _str == IDLE ? "IDLE" : "UNKNOWN"
+#define ENUM2STRING(_str) _str == POS ? POSDIR : \
+                    _str == NEG ? NEGDIR : \
+                    _str == ERR ? ERRDIR : \
+                    _str == IDLE ? IDLEDIR : "UNKNOWN"
 
 //                          0   1  2  3  4  5  6   7   8  9  0  1  2  3   4  5
 static const int QEM[16] = {0, -1, 1, 2, 1, 0, 2, -1, -1, 2, 0, 1, 2, 1, -1, 0};
@@ -59,10 +64,10 @@ int main(int argc, char *argv[])
 
 		switch(out_quad) 
 		{
-			case 0:   printf("%s%s%s\n", CYEL, ENUM2STRING(IDLE), CNRM); break;
-			case 1:   printf("%s%s%s\n", CGRN, ENUM2STRING(POS), CNRM); cnt_quad++; break;
-			case -1:  printf("%s%s%s\n", CBLU, ENUM2STRING(NEG), CNRM); cnt_quad--; break;
-			case 2:   printf("%s%s%s\n", CRED, ENUM2STRING(ERR), CNRM); break;
+			case 0:   printf("%s\n", ENUM2STRING(IDLE)); break;
+			case 1:   printf("%s\n", ENUM2STRING(POS)); cnt_quad++; break;
+			case -1:  printf("%s\n", ENUM2STRING(NEG)); cnt_quad--; break;
+			case 2:   printf("%s\n", ENUM2STRING(ERR)); break;
 			default: break;
 		}
 

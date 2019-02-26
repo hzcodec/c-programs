@@ -4,3 +4,5 @@ hsm/hsm1/fsm
 hsm/hsm1/*.o
 makefile1/src/*.o
 makefile1/build/main
+quadrature/quad1
+quadrature/quad2
