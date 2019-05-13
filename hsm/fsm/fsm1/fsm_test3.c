@@ -27,20 +27,20 @@ static int signal1;
 FSM(my_First_FSM, FSM1_State_t, State_A)
 
 	STATE(State_A)
-		printf("State_A\n");
+		printf("my_First_FSM: State_A\n");
 		NEXT_STATE(State_B);
 	END_STATE;
 	
 	STATE(State_B)
 		for (int i=0; i<2; i++) {
-			printf("State_B [%d]\n", i);
+			printf("my_First_FSM: State_B [%d]\n", i);
 		}
 	
 		NEXT_STATE(State_C);
 	END_STATE;
 	
 	STATE(State_C)
-		printf("State_C, signal1 is set\n");
+		printf("my_First_FSM: State_C, signal1 is set\n");
 		signal1 = 1;
 		NEXT_STATE(State_A);
 	END_STATE;
@@ -51,14 +51,14 @@ END_FSM(my_First_FSM);
 FSM(my_Second_FSM, FSM2_State_t, State_D)
 
 	STATE(State_D)
-		printf("  State_D\n");
+		printf("  my_Second_FSM: State_D\n");
 		if (signal1 == 1) {
 			NEXT_STATE(State_E);
 		}
 	END_STATE;
 	
 	STATE(State_E)
-		printf("  State_E\n");
+		printf("  my_Second_FSM: State_E\n");
 		NEXT_STATE(State_D);
 	END_STATE;
 	
