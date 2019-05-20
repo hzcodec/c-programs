@@ -5,6 +5,7 @@ struct Input_interface {
 	int a;
 	int b;
 	float c;
+	int enable;
 };
 
 struct Output_interface {
