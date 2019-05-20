@@ -6,3 +6,5 @@ makefile1/src/*.o
 makefile1/build/main
 quadrature/quad1
 quadrature/quad2
+chain_block/chain1/*.o
+chain_block/chain1/main
