@@ -24,12 +24,6 @@
 #include "f2.h"
 #include "f3.h"
 
-typedef enum {BYPASS_F1, BYPASS_F2, BYPASS_F3} bypass;
-
-struct bp {
-	bypass bp_enabled;
-};
-
 void printff(struct Input_interface *input, struct Output_interface *output)
 {
         printf("%s() - ina=%d, inb=%d, outa=%d, outb=%d\n", __func__, input->a, input->b, output->a, output->b);
