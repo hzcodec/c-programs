@@ -10,10 +10,12 @@
 #include <stdlib.h>
 #include "main.h"
 
+static struct Output_interface output;
+
 struct Output_interface f1(struct Input_interface *input)
 {
 	printf("%s() -\n", __func__);
-	struct Output_interface output;
+
 	output.a = 10;
 	output.b = 100;
 	printff(input, &output);
