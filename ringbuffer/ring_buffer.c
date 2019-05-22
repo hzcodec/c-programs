@@ -13,14 +13,13 @@
 
 void rb_init(RingBuffer* rb, int size)
 {
-	printf("%s() -\n", __func__);
-
 	rb->buffer = malloc(sizeof(int) * size);
 	rb->buffer_end = rb->buffer + size;
 	rb->size = size;
 	rb->data_start = rb->buffer;
 	rb->data_end = rb->buffer;
 	rb->count = 0;
+	printf("%s() - buffer=%p, buffer_end=%p, size=%d\n", __func__, rb->buffer, rb->buffer_end, rb->size);
 }
 
 void rb_free(RingBuffer* rb)
@@ -30,13 +29,12 @@ void rb_free(RingBuffer* rb)
 
 bool rb_push(RingBuffer* rb, int data)
 {
-	printf("%s() -\n", __func__);
-
 	if (rb == NULL || rb->buffer == NULL)
 	    return false;
 	
 	*rb->data_end = data;
 	rb->data_end++;
+	printf("%s() - data=%d, data_end=%p\n", __func__, *rb->data_end, rb->data_end);
 
 	if (rb->data_end == rb->buffer_end)
 	    rb->data_end = rb->buffer;
@@ -55,7 +53,6 @@ bool rb_push(RingBuffer* rb, int data)
 
 int rb_pop(RingBuffer* rb)
 {
-
 	printf("%s() -\n", __func__);
 
 	if (rb == NULL || rb->buffer == NULL)
@@ -81,12 +78,12 @@ bool rb_full(RingBuffer* rb)
  
 int main(int argc, char *argv[])
 {
- 
  	RingBuffer rb;
 
 	rb_init(&rb, 10);
 
 	rb_push(&rb, 200);
+	rb_push(&rb, 100);
 
 	int rv = rb_pop(&rb);
 	printf("rv=%d\n", rv);
@@ -97,3 +94,4 @@ int main(int argc, char *argv[])
 
         return 0;
 }
+
